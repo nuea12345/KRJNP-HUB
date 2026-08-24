@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Storm Launcher (PC)",
+    "price": 99,
+    "stock": 30,
+    "minQty": 30,
+    "desc": "แพ็คเกจคนรวย สายฟาร์มเต็มระบบ ขั้นต่ำ 30 คีย์ ได้ส่วนลด 50%",
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600"
+  },
+  {
+    "id": 2,
+    "name": "Roblox Executor (PC)",
+    "price": 150,
+    "stock": 5,
+    "minQty": 1,
+    "desc": "รันโค้ดเสถียร รองรับเกมดังทุกรูปแบบ ป้องกันการหลุด 100%",
+    "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600"
+  },
+  {
+    "id": 3,
+    "name": "Xenon Hub V1",
+    "price": 250,
+    "stock": 0,
+    "minQty": 1,
+    "desc": "สุดยอดสคริปต์รวมฟังก์ชันเทพ อัปเดตแพทช์ใหม่ล่าสุดตลอดชีพ",
+    "image": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600"
+  }
+]
