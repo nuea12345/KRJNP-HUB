@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRJNP SHOP // SECURE TERMINAL</title>
+    <title>KRJNP SHOP // ULTIMATE STORE</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,11 +12,21 @@
             theme: {
                 extend: {
                     colors: {
-                        cyberbg: '#050805',
-                        cybercard: '#0a100a',
+                        cyberbg: '#030703',
+                        cybercard: '#080d08',
                         cybergreen: '#00ff66',
-                        cyberdarkgreen: '#003b15',
-                        cyberborder: '#00ff6644'
+                        cyberdarkgreen: '#002b10',
+                        cyberborder: '#00ff6655'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
                     }
                 }
             }
@@ -24,81 +34,86 @@
     </script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font: Prompt & Share Tech Mono -->
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Prompt', sans-serif; background-color: #050805; color: #00ff66; }
+        body { font-family: 'Prompt', sans-serif; background-color: #030703; color: #00ff66; overflow-x: hidden; }
         .font-mono-code { font-family: 'Share Tech Mono', monospace; }
-        .cyber-glow { box-shadow: 0 0 15px rgba(0, 255, 102, 0.2); }
-        .cyber-glow-strong { box-shadow: 0 0 25px rgba(0, 255, 102, 0.4); }
-        .cyber-border { border: 1px solid rgba(0, 255, 102, 0.3); }
-        .cyber-border:focus { border-color: #00ff66; outline: none; box-shadow: 0 0 10px rgba(0, 255, 102, 0.5); }
+        .cyber-glow { box-shadow: 0 0 20px rgba(0, 255, 102, 0.25); transition: all 0.3s ease; }
+        .cyber-glow:hover { box-shadow: 0 0 30px rgba(0, 255, 102, 0.5); }
+        .cyber-glow-strong { box-shadow: 0 0 40px rgba(0, 255, 102, 0.6); }
+        .cyber-border { border: 1px solid rgba(0, 255, 102, 0.35); }
+        .cyber-border:focus { border-color: #00ff66; outline: none; box-shadow: 0 0 15px rgba(0, 255, 102, 0.7); }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050805; }
-        ::-webkit-scrollbar-thumb { background: #003b15; border-radius: 4px; border: 1px solid #00ff6655; }
+        ::-webkit-scrollbar-track { background: #030703; }
+        ::-webkit-scrollbar-thumb { background: #002b10; border-radius: 4px; border: 1px solid #00ff6666; }
         ::-webkit-scrollbar-thumb:hover { background: #00ff66; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-cybergreen selection:text-black">
 
     <!-- SCANLINE EFFECT -->
-    <div class="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20"></div>
+    <div class="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] opacity-20"></div>
 
     <!-- NAVBAR -->
-    <nav class="bg-cyberbg/90 backdrop-blur-md border-b border-cybergreen/30 sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+    <nav class="bg-cyberbg/95 backdrop-blur-xl border-b border-cybergreen/30 sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-2xl">
         <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchPage('home')">
-            <div class="bg-cyberdarkgreen border border-cybergreen p-2 rounded-lg text-cybergreen font-bold text-lg cyber-glow group-hover:scale-105 transition">
-                <i class="fa-solid fa-terminal"></i>
+            <div class="bg-cyberdarkgreen border border-cybergreen p-2.5 rounded-xl text-cybergreen font-bold text-lg cyber-glow group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-terminal animate-pulse"></i>
             </div>
-            <span class="font-mono-code font-bold text-xl tracking-wider text-cybergreen drop-shadow-[0_0_8px_rgba(0,255,102,0.6)]">&gt; KRJNP_SHOP.exe</span>
+            <span class="font-mono-code font-bold text-xl tracking-wider text-cybergreen drop-shadow-[0_0_10px_rgba(0,255,102,0.8)]">&gt; KRJNP_SHOP</span>
         </div>
-        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
-            <button onclick="switchPage('home')" class="hover:text-cybergreen transition flex items-center space-x-1"><i class="fa-solid fa-house text-xs mr-1"></i> หน้าหลัก</button>
-            <button onclick="switchPage('products')" class="hover:text-cybergreen transition flex items-center space-x-1"><i class="fa-solid fa-box text-xs mr-1"></i> สินค้าทั้งหมด</button>
+
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+            <button onclick="switchPage('home')" class="hover:text-cybergreen transition flex items-center space-x-1.5"><i class="fa-solid fa-house text-xs"></i><span>หน้าหลัก</span></button>
+            <button onclick="switchPage('products')" class="hover:text-cybergreen transition flex items-center space-x-1.5"><i class="fa-solid fa-box text-xs"></i><span>สินค้าทั้งหมด</span></button>
         </div>
+
         <div class="flex items-center space-x-3">
-            <button onclick="openAdminLoginModal()" class="bg-cyberdarkgreen/50 border border-cybergreen/50 hover:bg-cybergreen hover:text-black text-cybergreen px-3.5 py-1.5 rounded-lg text-xs font-semibold font-mono-code flex items-center space-x-1.5 transition cyber-glow">
-                <i class="fa-solid fa-shield-halved text-xs"></i><span>ADMIN_PANEL</span>
+            <!-- Admin Panel Button (ซ่อนไว้จนกว่าจะ login เป็น KRJNP) -->
+            <button id="nav-admin-btn" onclick="openAdminModal()" class="hidden bg-cyberdarkgreen/80 border border-cybergreen hover:bg-cybergreen hover:text-black text-cybergreen px-3.5 py-2 rounded-xl text-xs font-semibold font-mono-code flex items-center space-x-1.5 transition cyber-glow">
+                <i class="fa-solid fa-shield-halved"></i><span>ADMIN_HUB</span>
             </button>
-            <button onclick="openCustomAlert('DISCORD', 'เข้าร่วม Discord ของ KRJNP SHOP ได้ที่ลิงก์เชิญหลักของกลุ่มเรา!')" class="bg-cybergreen hover:bg-emerald-400 text-black px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 cyber-glow-strong transition">
-                <i class="fa-brands fa-discord text-lg"></i>
-                <span>DISCORD</span>
-            </button>
+
+            <!-- User Auth Profile / Login Button -->
+            <div id="auth-nav-container">
+                <button onclick="openAuthModal('login')" class="bg-cybergreen hover:bg-emerald-400 text-black px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 cyber-glow transition transform hover:scale-105">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>เข้าสู่ระบบ</span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN CONTENT -->
     <main class="flex-grow">
 
         <!-- PAGE: HOME -->
-        <section id="page-home" class="py-20 px-4 text-center max-w-5xl mx-auto">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-cyberdarkgreen/40 border border-cybergreen/40 text-cybergreen text-xs font-mono-code cyber-glow">
-                [SYSTEM STATUS: SECURE & ONLINE // KRJNP SHOP OFFICIAL]
+        <section id="page-home" class="py-24 px-4 text-center max-w-5xl mx-auto">
+            <div class="inline-block mb-6 px-5 py-2 rounded-full bg-cyberdarkgreen/50 border border-cybergreen/50 text-cybergreen text-xs font-mono-code cyber-glow animate-float">
+                [SECURE PROTOCOL ACTIVE // KRJNP SHOP OFFICIAL]
             </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 font-mono-code text-white drop-shadow-[0_0_15px_rgba(0,255,102,0.4)]">
-                KRJNP <span class="text-cybergreen">STORE HUB</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 font-mono-code text-white drop-shadow-[0_0_20px_rgba(0,255,102,0.5)]">
+                KRJNP <span class="text-cybergreen animate-pulse">STORE HUB</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light">
-                แหล่งรวมสคริปต์และโปรแกรมช่วยเล่น Roblox คุณภาพสูง เสถียร ปลอดภัย จัดส่งอัตโนมัติรวดเร็ว 24 ชั่วโมง
+            <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                แหล่งรวมสคริปต์และระบบเกมมิ่งคุณภาพสูง เสถียร ปลอดภัย ส่งมอบคีย์อัตโนมัติรวดเร็วทันใจตลอด 24 ชั่วโมง
             </p>
 
-            <div class="flex flex-col items-center justify-center space-y-3 mb-12">
-                <div class="flex -space-x-3 overflow-hidden">
-                    <img class="inline-block h-10 w-10 rounded-full ring-2 ring-cybergreen object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" alt="Avatar">
-                    <img class="inline-block h-10 w-10 rounded-full ring-2 ring-cybergreen object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Avatar">
-                    <img class="inline-block h-10 w-10 rounded-full ring-2 ring-cybergreen object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100" alt="Avatar">
-                </div>
-                <div class="flex text-cybergreen space-x-1 text-sm drop-shadow-[0_0_5px_rgba(0,255,102,0.8)]">
+            <!-- ลบรูปดิสคอร์ดออกแล้ว ทำ UI สถิติรีวิวให้มีชีวิตชีวาแทน -->
+            <div class="flex flex-col items-center justify-center space-y-4 mb-12 bg-cybercard/60 border border-cybergreen/30 p-6 rounded-2xl max-w-lg mx-auto cyber-glow">
+                <div class="flex text-amber-400 space-x-2 text-xl drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
-                <span class="text-xs text-gray-500 font-mono-code">&gt; VERIFIED_CUSTOMERS: 150,000+ SUCCESSFUL TRANSACTIONS</span>
+                <span class="text-sm text-cybergreen font-mono-code font-bold tracking-wider">&gt; VERIFIED_CUSTOMERS: 150,000+ SUCCESSFUL TRANSACTIONS</span>
+                <p class="text-xs text-gray-400">การันตีความพึงพอใจจากผู้ใช้งานจริงทั่วประเทศ ระบบเสถียรไม่มีสะดุด</p>
             </div>
 
-            <button onclick="switchPage('products')" class="bg-cybergreen hover:bg-emerald-400 text-black font-bold px-8 py-3.5 rounded-xl cyber-glow-strong transition transform hover:-scale-105 font-mono-code tracking-wider">
+            <button onclick="switchPage('products')" class="bg-cybergreen hover:bg-emerald-400 text-black font-bold px-9 py-4 rounded-2xl cyber-glow-strong transition transform hover:scale-105 font-mono-code tracking-wider text-base">
                 OPEN_STORE() <i class="fa-solid fa-terminal ml-2"></i>
             </button>
         </section>
@@ -110,14 +125,18 @@
                 <span>/</span>
                 <span class="text-cybergreen">STORE_CATALOG</span>
             </div>
-            <h2 class="text-2xl font-bold mb-8 flex items-center space-x-3 font-mono-code text-white">
-                <i class="fa-solid fa-code text-cybergreen"></i>
-                <span>// KRJNP_PRODUCTS</span>
-            </h2>
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold flex items-center space-x-3 font-mono-code text-white">
+                    <i class="fa-solid fa-code text-cybergreen animate-bounce"></i>
+                    <span>// KRJNP_PRODUCTS</span>
+                </h2>
+                <div id="user-wallet-badge" class="bg-cybercard border border-cybergreen/40 px-4 py-2 rounded-xl text-xs font-mono-code text-cybergreen cyber-glow">
+                    ยอดเงินคงเหลือ: <span id="wallet-balance" class="font-bold text-white">฿0</span>
+                </div>
+            </div>
 
-            <!-- Product Grid Container -->
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- โหลดผ่าน JS -->
+                <!-- โหลดสินค้าผ่าน JS -->
             </div>
         </section>
 
@@ -131,26 +150,23 @@
                 <span id="detail-nav-title" class="text-cybergreen">PRODUCT_DETAIL</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-cybercard border border-cybergreen/40 p-6 rounded-2xl cyber-glow">
-                <!-- Product Image -->
-                <div class="relative overflow-hidden rounded-xl border border-cybergreen/30 bg-black flex items-center justify-center min-h-[250px]">
-                    <img id="detail-img" src="" alt="Product" class="w-full h-full object-cover rounded-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-cybercard border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
+                <div class="relative overflow-hidden rounded-2xl border border-cybergreen/30 bg-black flex items-center justify-center min-h-[280px]">
+                    <img id="detail-img" src="" alt="Product" class="w-full h-full object-cover rounded-xl opacity-95 hover:scale-105 transition duration-500">
                 </div>
 
-                <!-- Product Info & Purchase Form -->
                 <div class="flex flex-col justify-between">
                     <div>
                         <h1 id="detail-title" class="text-2xl font-bold mb-3 text-white font-mono-code">ชื่อสินค้า</h1>
                         <div id="detail-price-tag" class="text-3xl font-extrabold text-cybergreen mb-4 font-mono-code">฿0</div>
                         <div class="text-xs text-gray-400 mb-1 font-mono-code">PRODUCT_DESCRIPTION:</div>
-                        <p id="detail-desc" class="text-gray-300 text-sm bg-black/60 p-3.5 rounded-xl border border-cybergreen/20 mb-6 leading-relaxed font-light">
+                        <p id="detail-desc" class="text-gray-300 text-sm bg-black/70 p-4 rounded-xl border border-cybergreen/20 mb-6 leading-relaxed font-light">
                             คำอธิบาย...
                         </p>
                     </div>
 
                     <div class="space-y-4 pt-4 border-t border-cybergreen/20">
                         <div class="flex items-center justify-between">
-                            <!-- Quantity Selector -->
                             <div class="flex items-center border border-cybergreen/40 rounded-xl overflow-hidden bg-black">
                                 <button onclick="adjustQty(-1)" class="px-3.5 py-2 hover:bg-cyberdarkgreen text-cybergreen transition"><i class="fa-solid fa-minus text-xs"></i></button>
                                 <span id="qty-display" class="px-4 py-2 font-semibold text-white text-sm font-mono-code">1</span>
@@ -161,25 +177,25 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between bg-black/60 px-4 py-3 rounded-xl border border-cybergreen/30">
+                        <div class="flex items-center justify-between bg-black/70 px-4 py-3 rounded-xl border border-cybergreen/30">
                             <span class="text-sm text-gray-400 font-mono-code">TOTAL_PRICE:</span>
                             <span id="total-price" class="text-2xl font-bold text-cybergreen font-mono-code">฿0</span>
                         </div>
 
-                        <button onclick="openCheckoutModal()" class="w-full bg-cybergreen hover:bg-emerald-400 text-black font-bold py-3 rounded-xl cyber-glow-strong transition text-center font-mono-code tracking-wider">
+                        <button onclick="openCheckoutModal()" class="w-full bg-cybergreen hover:bg-emerald-400 text-black font-bold py-3.5 rounded-xl cyber-glow-strong transition text-center font-mono-code tracking-wider">
                             PURCHASE_NOW()
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- YouTube Video Section -->
-            <div class="mt-12 bg-cybercard border border-cybergreen/40 p-6 rounded-2xl cyber-glow">
+            <!-- YouTube Video -->
+            <div class="mt-12 bg-cybercard border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
                 <h3 class="text-lg font-bold mb-4 flex items-center space-x-2 font-mono-code text-white">
-                    <i class="fa-brands fa-youtube text-red-500"></i>
+                    <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
                     <span>// PREVIEW_STREAM</span>
                 </h3>
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-cybergreen/30 bg-black">
+                <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-cybergreen/30 bg-black">
                     <iframe id="detail-youtube" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
@@ -187,9 +203,66 @@
 
     </main>
 
-    <!-- CUSTOM UI: CHECKOUT MODAL (ตามแบบที่คุณส่งมา) -->
+    <!-- AUTH MODAL: สมัครสมาชิก / เข้าสู่ระบบ (ใช้อีเมล ชื่อ รหัสผ่าน) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-md rounded-3xl p-8 shadow-2xl cyber-glow-strong relative">
+            <div class="flex justify-between items-center mb-6 border-b border-cybergreen/30 pb-4">
+                <h3 id="auth-modal-title" class="text-lg font-bold text-cybergreen font-mono-code flex items-center space-x-2">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>ลงชื่อเข้าใช้ระบบ</span>
+                </h3>
+                <button onclick="closeAuthModal()" class="text-gray-400 hover:text-cybergreen"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- ฟอร์มเข้าสู่ระบบ -->
+            <div id="form-login" class="space-y-4">
+                <div>
+                    <label class="text-xs text-gray-400 font-mono-code block mb-1">อีเมล หรือ ชื่อผู้ใช้:</label>
+                    <input type="text" id="login-email" placeholder="example@email.com หรือ ชื่อผู้ใช้" class="w-full bg-black border border-cybergreen/40 rounded-xl px-4 py-3 text-xs text-cybergreen font-mono-code cyber-border">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 font-mono-code block mb-1">รหัสผ่าน:</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" class="w-full bg-black border border-cybergreen/40 rounded-xl px-4 py-3 text-xs text-cybergreen font-mono-code cyber-border">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-cybergreen hover:bg-emerald-400 text-black font-bold py-3.5 rounded-xl cyber-glow transition text-xs font-mono-code tracking-wider">
+                    LOGIN()
+                </button>
+                <div class="text-center pt-2">
+                    <button onclick="switchAuthMode('register')" class="text-xs text-gray-400 hover:text-cybergreen font-mono-code underline">
+                        ยังไม่มีบัญชี? สมัครสมาชิกที่นี่
+                    </button>
+                </div>
+            </div>
+
+            <!-- ฟอร์มสมัครสมาชิก (ใช้อีเมล ชื่อ รหัสผ่าน) -->
+            <div id="form-register" class="space-y-4 hidden">
+                <div>
+                    <label class="text-xs text-gray-400 font-mono-code block mb-1">อีเมล:</label>
+                    <input type="email" id="reg-email" placeholder="your@email.com" class="w-full bg-black border border-cybergreen/40 rounded-xl px-4 py-3 text-xs text-cybergreen font-mono-code cyber-border">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 font-mono-code block mb-1">ชื่อผู้ใช้ (Username):</label>
+                    <input type="text" id="reg-name" placeholder="ชื่อของคุณ" class="w-full bg-black border border-cybergreen/40 rounded-xl px-4 py-3 text-xs text-cybergreen font-mono-code cyber-border">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 font-mono-code block mb-1">รหัสผ่าน:</label>
+                    <input type="password" id="reg-pass" placeholder="••••••••" class="w-full bg-black border border-cybergreen/40 rounded-xl px-4 py-3 text-xs text-cybergreen font-mono-code cyber-border">
+                </div>
+                <button onclick="handleRegister()" class="w-full bg-cybergreen hover:bg-emerald-400 text-black font-bold py-3.5 rounded-xl cyber-glow transition text-xs font-mono-code tracking-wider">
+                    REGISTER_ACCOUNT()
+                </button>
+                <div class="text-center pt-2">
+                    <button onclick="switchAuthMode('login')" class="text-xs text-gray-400 hover:text-cybergreen font-mono-code underline">
+                        มีบัญชีอยู่แล้ว? เข้าสู่ระบบ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
     <div id="checkout-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cybercard border border-cybergreen w-full max-w-lg rounded-2xl p-6 shadow-2xl cyber-glow-strong relative">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-lg rounded-3xl p-6 shadow-2xl cyber-glow-strong">
             <div class="flex justify-between items-center mb-6 border-b border-cybergreen/30 pb-4">
                 <h3 class="text-lg font-bold flex items-center space-x-2 text-cybergreen font-mono-code">
                     <i class="fa-solid fa-lock text-cybergreen"></i>
@@ -198,14 +271,14 @@
                 <button onclick="closeCheckoutModal()" class="text-gray-400 hover:text-cybergreen"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <div class="bg-black/60 border border-cybergreen/40 p-4 rounded-xl mb-4">
+            <div class="bg-black/70 border border-cybergreen/40 p-4 rounded-2xl mb-4">
                 <div id="checkout-item-title" class="font-bold text-white text-sm mb-2 font-mono-code text-cybergreen">ชื่อสินค้า (ราคา)</div>
                 <p class="text-xs text-gray-400 leading-relaxed">
                     โปรดตรวจสอบความถูกต้องของสินค้า ราคา และยอดเงินคงเหลือของคุณก่อนกดปุ่มยืนยันการสั่งซื้อ เมื่อซื้อแล้วจะไม่สามารถขอคืนเงินได้ในทุกกรณี
                 </p>
             </div>
 
-            <div class="bg-cyberdarkgreen/20 border border-cybergreen/30 p-3.5 rounded-xl mb-6 flex items-center space-x-3">
+            <div class="bg-cyberdarkgreen/20 border border-cybergreen/30 p-3.5 rounded-2xl mb-6 flex items-center space-x-3">
                 <input type="checkbox" id="checkout-checkbox" class="w-4 h-4 accent-[#00ff66] cursor-pointer">
                 <label for="checkout-checkbox" class="text-xs text-gray-300 cursor-pointer select-none">
                     ฉันได้ตรวจสอบรายละเอียดและกด "รับทราบ" เงื่อนไขการสั่งซื้อเรียบร้อยแล้ว
@@ -213,19 +286,19 @@
             </div>
 
             <div class="flex space-x-3">
-                <button onclick="closeCheckoutModal()" class="w-1/2 bg-black hover:bg-gray-900 border border-gray-700 text-gray-300 font-bold py-2.5 rounded-xl transition text-sm font-mono-code">
+                <button onclick="closeCheckoutModal()" class="w-1/2 bg-black hover:bg-gray-900 border border-gray-700 text-gray-300 font-bold py-3 rounded-xl transition text-sm font-mono-code">
                     <i class="fa-solid fa-xmark mr-1"></i> ยกเลิก
                 </button>
-                <button onclick="confirmPurchase()" class="w-1/2 bg-cybergreen hover:bg-emerald-400 text-black font-bold py-2.5 rounded-xl cyber-glow transition text-sm font-mono-code">
+                <button onclick="confirmPurchase()" class="w-1/2 bg-cybergreen hover:bg-emerald-400 text-black font-bold py-3 rounded-xl cyber-glow transition text-sm font-mono-code">
                     <i class="fa-solid fa-check mr-1"></i> ซื้อสินค้า
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- CUSTOM UI: PURCHASE SUCCESS MODAL (แสดง Key/Script ที่แอดมินตั้งค่า) -->
+    <!-- SUCCESS MODAL (แสดง Key/Script) -->
     <div id="success-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cybercard border border-cybergreen w-full max-w-lg rounded-2xl p-6 shadow-2xl cyber-glow-strong">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-lg rounded-3xl p-6 shadow-2xl cyber-glow-strong">
             <div class="flex justify-between items-center mb-4 border-b border-cybergreen/30 pb-3">
                 <h3 class="text-lg font-bold flex items-center space-x-2 text-cybergreen font-mono-code">
                     <i class="fa-solid fa-circle-check text-cybergreen"></i>
@@ -235,16 +308,14 @@
             </div>
 
             <div class="space-y-4 mb-6">
-                <div class="bg-black/60 border border-cybergreen/30 p-3.5 rounded-xl space-y-1 font-mono-code text-xs">
+                <div class="bg-black/70 border border-cybergreen/30 p-4 rounded-2xl space-y-1 font-mono-code text-xs">
                     <div class="text-gray-400">ชื่อสินค้า: <span id="success-product-name" class="text-white">...</span></div>
                     <div class="text-gray-400">จำนวนที่ซื้อ: <span id="success-product-qty" class="text-cybergreen">1</span> ชิ้น</div>
                 </div>
 
                 <div>
                     <div class="text-xs text-gray-400 mb-1 font-mono-code">KEY / SCRIPT ของคุณคือ:</div>
-                    <div class="relative">
-                        <textarea id="success-script-box" readonly class="w-full h-28 bg-black border border-cybergreen/50 rounded-xl p-3 text-xs text-cybergreen font-mono-code resize-none focus:outline-none"></textarea>
-                    </div>
+                    <textarea id="success-script-box" readonly class="w-full h-28 bg-black border border-cybergreen/50 rounded-2xl p-3 text-xs text-cybergreen font-mono-code resize-none focus:outline-none"></textarea>
                 </div>
             </div>
 
@@ -254,9 +325,9 @@
         </div>
     </div>
 
-    <!-- CUSTOM UI: ALERT / ERROR MODAL (แทน alert เดิม) -->
+    <!-- CUSTOM ALERT MODAL -->
     <div id="custom-alert-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cybercard border border-cybergreen w-full max-w-sm rounded-2xl p-6 shadow-2xl cyber-glow text-center">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-sm rounded-3xl p-6 shadow-2xl cyber-glow text-center">
             <div id="alert-icon" class="text-3xl text-cybergreen mb-3"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <h3 id="alert-title-text" class="text-base font-bold text-white mb-2 font-mono-code">แจ้งเตือนระบบ</h3>
             <p id="alert-message-text" class="text-xs text-gray-300 mb-6 font-mono-code leading-relaxed">ข้อความแจ้งเตือน...</p>
@@ -266,56 +337,63 @@
         </div>
     </div>
 
-    <!-- CUSTOM UI: ADMIN LOGIN MODAL -->
-    <div id="admin-login-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cybercard border border-cybergreen w-full max-w-sm rounded-2xl p-6 shadow-2xl cyber-glow">
-            <div class="flex justify-between items-center mb-4 border-b border-cybergreen/30 pb-3">
-                <h3 class="text-sm font-bold text-cybergreen font-mono-code flex items-center space-x-2">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>ADMIN AUTHENTICATION</span>
-                </h3>
-                <button onclick="closeAdminLoginModal()" class="text-gray-400 hover:text-cybergreen"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <p class="text-xs text-gray-400 mb-4 font-mono-code">กรุณากรอกรหัสผ่านแอดมิน (ค่าเริ่มต้น: 1234)</p>
-            <input type="password" id="admin-pass-input" placeholder="Enter Password..." class="w-full bg-black border border-cybergreen/40 rounded-xl px-3.5 py-2.5 text-xs text-cybergreen font-mono-code mb-4 cyber-border">
-            <button onclick="verifyAdminPassword()" class="w-full bg-cybergreen hover:bg-emerald-400 text-black font-bold py-2.5 rounded-xl cyber-glow transition text-xs font-mono-code tracking-wider">
-                LOGIN_ADMIN()
-            </button>
-        </div>
-    </div>
-
-    <!-- ADMIN PANEL MODAL -->
+    <!-- ADMIN HUB MODAL (จัดการสินค้า + เพิ่มเงินให้ผู้ใช้โดยการคลิกชื่อ) -->
     <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cybercard border border-cybergreen w-full max-w-4xl rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto cyber-glow-strong">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-5xl rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto cyber-glow-strong">
             <div class="flex justify-between items-center mb-6 border-b border-cybergreen/30 pb-4">
                 <h3 class="text-xl font-bold flex items-center space-x-2 text-cybergreen font-mono-code">
-                    <i class="fa-solid fa-terminal"></i>
+                    <i class="fa-solid fa-shield-halved"></i>
                     <span>// KRJNP_ADMIN_CONTROL_PANEL</span>
                 </h3>
                 <button onclick="closeAdminModal()" class="text-gray-400 hover:text-cybergreen"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
-            <div class="bg-cyberdarkgreen/30 border border-cybergreen/50 p-4 rounded-xl mb-6 text-xs text-gray-300 font-mono-code">
-                <p class="font-semibold mb-1 text-cybergreen"><i class="fa-solid fa-circle-info mr-1"></i> [ADMIN GUIDE]:</p>
-                แก้ไขสินค้า เพิ่มสต็อก ลดสต็อก ลบสินค้า ตั้งค่า Key/Script สำหรับส่งให้ลูกค้าอัตโนมัติ และอัปโหลดรูปภาพได้ทั้งหมดที่นี่ เมื่อเสร็จแล้วกด "DOWNLOAD products.json" นำไปวางทับไฟล์เดิมใน GitHub
+            <!-- Tabs แอดมิน -->
+            <div class="flex space-x-3 mb-6 font-mono-code text-xs">
+                <button onclick="switchAdminTab('products')" id="tab-btn-products" class="bg-cybergreen text-black px-4 py-2 rounded-xl font-bold">จัดการสินค้า & สต็อก</button>
+                <button onclick="switchAdminTab('users')" id="tab-btn-users" class="bg-cyberdarkgreen/60 border border-cybergreen/50 text-cybergreen px-4 py-2 rounded-xl">จัดการสมาชิก & เติมเงิน</button>
             </div>
 
-            <div class="flex justify-between items-center mb-4">
-                <h4 class="font-bold text-sm text-white font-mono-code">DATABASE_ITEMS_LIST</h4>
-                <button onclick="addNewProduct()" class="bg-cybergreen hover:bg-emerald-400 text-black text-xs font-bold px-3.5 py-2 rounded-lg transition font-mono-code cyber-glow">
-                    <i class="fa-solid fa-plus mr-1"></i> ADD_NEW_PRODUCT
-                </button>
+            <!-- TAB 1: จัดการสินค้า -->
+            <div id="admin-tab-products" class="space-y-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="font-bold text-sm text-white font-mono-code">DATABASE_ITEMS_LIST</h4>
+                    <button onclick="addNewProduct()" class="bg-cybergreen hover:bg-emerald-400 text-black text-xs font-bold px-3.5 py-2 rounded-xl transition font-mono-code cyber-glow">
+                        <i class="fa-solid fa-plus mr-1"></i> ADD_NEW_PRODUCT
+                    </button>
+                </div>
+                <div id="admin-product-list" class="space-y-4"></div>
+                <div class="mt-8 pt-4 border-t border-cybergreen/30 flex justify-between items-center">
+                    <span class="text-xs text-gray-400 font-mono-code">TOTAL PRODUCTS: <span id="admin-total-count" class="text-cybergreen">0</span></span>
+                    <button onclick="downloadProductsJSON()" class="bg-cybergreen hover:bg-emerald-400 text-black font-bold px-6 py-2.5 rounded-xl cyber-glow transition text-sm font-mono-code">
+                        <i class="fa-solid fa-download mr-2"></i> DOWNLOAD products.json
+                    </button>
+                </div>
             </div>
 
-            <div id="admin-product-list" class="space-y-4">
-                <!-- รายการสินค้าแอดมิน -->
+            <!-- TAB 2: จัดการสมาชิกและเติมเงินตามรายชื่อ -->
+            <div id="admin-tab-users" class="hidden space-y-4">
+                <div class="bg-cyberdarkgreen/30 border border-cybergreen/50 p-4 rounded-2xl text-xs text-gray-300 font-mono-code mb-4">
+                    <p class="text-cybergreen font-bold mb-1"><i class="fa-solid fa-circle-info mr-1"></i> [ADMIN USER CONTROL]:</p>
+                    คลิกเลือกชื่อสมาชิกในรายการด้านล่าง เพื่อเพิ่มเงินหรือจัดการยอดเงินให้ผู้ใช้รายนั้นได้ทันที!
+                </div>
+                <div id="admin-user-list" class="space-y-3"></div>
             </div>
+        </div>
+    </div>
 
-            <div class="mt-8 pt-4 border-t border-cybergreen/30 flex justify-between items-center">
-                <span class="text-xs text-gray-400 font-mono-code">TOTAL PRODUCTS: <span id="admin-total-count" class="text-cybergreen">0</span></span>
-                <button onclick="downloadProductsJSON()" class="bg-cybergreen hover:bg-emerald-400 text-black font-bold px-6 py-2.5 rounded-xl cyber-glow-strong transition text-sm font-mono-code tracking-wider">
-                    <i class="fa-solid fa-download mr-2"></i> DOWNLOAD products.json
-                </button>
+    <!-- MODAL เติมเงินให้ยูสเซอร์ (เวลาแอดมินกดคลิกที่ชื่อ) -->
+    <div id="admin-add-balance-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-cybercard border border-cybergreen w-full max-w-sm rounded-3xl p-6 shadow-2xl cyber-glow">
+            <h3 class="text-sm font-bold text-cybergreen font-mono-code mb-2">จัดการยอดเงินสมาชิก</h3>
+            <p id="target-username-label" class="text-xs text-white font-mono-code mb-4 font-semibold">Username: -</p>
+            
+            <label class="text-[10px] text-gray-400 font-mono-code block mb-1">จำนวนเงินที่จะเพิ่ม (หรือติดลบเพื่อหักออก):</label>
+            <input type="number" id="admin-add-amount" value="100" class="w-full bg-black border border-cybergreen/40 rounded-xl px-3.5 py-2.5 text-xs text-cybergreen font-mono-code mb-4 cyber-border">
+            
+            <div class="flex space-x-2">
+                <button onclick="document.getElementById('admin-add-balance-modal').classList.add('hidden')" class="w-1/2 bg-black border border-gray-700 text-gray-300 py-2.5 rounded-xl text-xs font-mono-code">ยกเลิก</button>
+                <button onclick="confirmAdminAddBalance()" class="w-1/2 bg-cybergreen text-black font-bold py-2.5 rounded-xl text-xs font-mono-code">ยืนยัน</button>
             </div>
         </div>
     </div>
@@ -323,10 +401,32 @@
     <!-- SCRIPT LOGIC -->
     <script>
         let products = [];
+        let users = [];
+        let currentUser = null; // เก็บข้อมูล user ที่ login อยู่
         let currentProductId = null;
         let currentQty = 1;
+        let selectedUserForBalance = null;
 
-        async function loadProducts() {
+        async function loadData() {
+            // โหลดผู้ใช้จาก localStorage
+            const savedUsers = localStorage.getItem('krjnp_users');
+            if (savedUsers) {
+                users = JSON.parse(savedUsers);
+            } else {
+                users = [
+                    { email: 'admin@krjnp.com', name: 'KRJNP', pass: 'KRJNP', balance: 99999, isAdmin: true },
+                    { email: 'user@test.com', name: 'TestUser', pass: '1234', balance: 500, isAdmin: false }
+                ];
+                localStorage.setItem('krjnp_users', JSON.stringify(users));
+            }
+
+            // โหลด Session การLogin ล่าสุด
+            const savedSession = localStorage.getItem('krjnp_current_user');
+            if (savedSession) {
+                currentUser = JSON.parse(savedSession);
+                updateAuthUI();
+            }
+
             try {
                 let res = await fetch('products.json');
                 if(res.ok) {
@@ -335,7 +435,6 @@
                     throw new Error("Load failed");
                 }
             } catch(e) {
-                // ข้อมูลเริ่มต้น KRJNP SHOP
                 products = [
                     { 
                         id: 1, 
@@ -374,17 +473,152 @@
 
             if (pageId === 'products') {
                 renderProducts();
+                updateWalletDisplay();
             }
         }
 
+        // --- AUTH SYSTEM ---
+        function openAuthModal(mode) {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            switchAuthMode(mode);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function switchAuthMode(mode) {
+            if (mode === 'login') {
+                document.getElementById('form-login').classList.remove('hidden');
+                document.getElementById('form-register').classList.add('hidden');
+                document.getElementById('auth-modal-title').innerHTML = `<i class="fa-solid fa-user-lock"></i><span>ลงชื่อเข้าใช้ระบบ</span>`;
+            } else {
+                document.getElementById('form-login').classList.add('hidden');
+                document.getElementById('form-register').classList.remove('hidden');
+                document.getElementById('auth-modal-title').innerHTML = `<i class="fa-solid fa-user-plus"></i><span>สมัครสมาชิกใหม่</span>`;
+            }
+        }
+
+        function handleRegister() {
+            const email = document.getElementById('reg-email').value.trim();
+            const name = document.getElementById('reg-name').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+
+            if (!email || !name || !pass) {
+                openCustomAlert("ERROR", "กรุณากรอกข้อมูล อีเมล ชื่อ และรหัสผ่าน ให้ครบถ้วน!");
+                return;
+            }
+
+            if (users.some(u => u.email === email || u.name === name)) {
+                openCustomAlert("ERROR", "อีเมลหรือชื่อผู้ใช้นี้ถูกใช้งานไปแล้ว!");
+                return;
+            }
+
+            const newUser = { email, name, pass, balance: 100, isAdmin: (name.toUpperCase() === 'KRJNP' || pass === 'KRJNP') };
+            users.push(newUser);
+            localStorage.setItem('krjnp_users', JSON.stringify(users));
+
+            openCustomAlert("SUCCESS", "สมัครสมาชิกสำเร็จ! ได้รับเครดิตเริ่มต้น ฿100");
+            closeAuthModal();
+            loginUser(newUser);
+        }
+
+        function handleLogin() {
+            const identifier = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            if (!identifier || !pass) {
+                openCustomAlert("ERROR", "กรุณากรอกข้อมูลให้ครบถ้วน!");
+                return;
+            }
+
+            // เช็คว่าเป็นแอดมินรหัส KRJNP หรือไม่
+            let found = users.find(u => (u.email === identifier || u.name === identifier) && u.pass === pass);
+            
+            // เช็คกรณีใส่รหัสแอดมิน KRJNP ตรงๆ
+            if (!found && pass === 'KRJNP') {
+                found = { email: identifier, name: identifier, pass: 'KRJNP', balance: 99999, isAdmin: true };
+                users.push(found);
+                localStorage.setItem('krjnp_users', JSON.stringify(users));
+            }
+
+            if (found) {
+                if (found.name.toUpperCase() === 'KRJNP' || found.pass === 'KRJNP') {
+                    found.isAdmin = true;
+                }
+                loginUser(found);
+                closeAuthModal();
+                openCustomAlert("SUCCESS", `ยินดีต้อนรับคุณ ${found.name} เข้าสู่ระบบ!`);
+            } else {
+                openCustomAlert("ERROR", "อีเมล ชื่อ หรือรหัสผ่านไม่ถูกต้อง!");
+            }
+        }
+
+        function loginUser(userObj) {
+            currentUser = userObj;
+            localStorage.setItem('krjnp_current_user', JSON.stringify(currentUser));
+            updateAuthUI();
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('krjnp_current_user');
+            updateAuthUI();
+            switchPage('home');
+            openCustomAlert("LOGOUT", "ออกจากระบบเรียบร้อยแล้ว");
+        }
+
+        function updateAuthUI() {
+            const container = document.getElementById('auth-nav-container');
+            const adminBtn = document.getElementById('nav-admin-btn');
+
+            if (currentUser) {
+                container.innerHTML = `
+                    <div class="flex items-center space-x-3 bg-cybercard border border-cybergreen/40 px-3.5 py-1.5 rounded-xl cyber-glow">
+                        <div class="text-xs font-mono-code text-white">
+                            <i class="fa-solid fa-circle-user text-cybergreen mr-1"></i> ${currentUser.name}
+                        </div>
+                        <button onclick="logoutUser()" title="ออกจากระบบ" class="text-red-400 hover:text-red-300 text-xs"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                `;
+                if (currentUser.isAdmin || currentUser.name.toUpperCase() === 'KRJNP') {
+                    adminBtn.classList.remove('hidden');
+                } else {
+                    adminBtn.classList.add('hidden');
+                }
+            } else {
+                container.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="bg-cybergreen hover:bg-emerald-400 text-black px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 cyber-glow transition">
+                        <i class="fa-solid fa-user-lock"></i>
+                        <span>เข้าสู่ระบบ</span>
+                    </button>
+                `;
+                adminBtn.classList.add('hidden');
+            }
+            updateWalletDisplay();
+        }
+
+        function updateWalletDisplay() {
+            const balanceEl = document.getElementById('wallet-balance');
+            if (currentUser) {
+                // ซิงค์เงินกับรายการ users ล่าสุด
+                const uInList = users.find(u => u.email === currentUser.email);
+                if (uInList) currentUser.balance = uInList.balance;
+                balanceEl.innerText = '฿' + currentUser.balance.toLocaleString();
+            } else {
+                balanceEl.innerText = '฿0 (ยังไม่เข้าสู่ระบบ)';
+            }
+        }
+
+        // --- PRODUCTS & PURCHASE ---
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = '';
             products.forEach(p => {
                 grid.innerHTML += `
-                    <div onclick="openDetail(${p.id})" class="bg-cybercard border border-cybergreen/30 rounded-2xl overflow-hidden cursor-pointer hover:border-cybergreen transition transform hover:-translate-y-1 cyber-glow group">
+                    <div onclick="openDetail(${p.id})" class="bg-cybercard border border-cybergreen/30 rounded-3xl overflow-hidden cursor-pointer hover:border-cybergreen transition transform hover:-translate-y-1.5 cyber-glow group">
                         <div class="h-48 overflow-hidden relative bg-black">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 opacity-90">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-90">
                             <div class="absolute top-3 right-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono-code border border-cybergreen/50 text-cybergreen">
                                 <i class="fa-solid fa-box-archive mr-1"></i> ${p.stock > 0 ? p.stock + ' UNITS' : 'SOLD OUT'}
                             </div>
@@ -404,7 +638,6 @@
             if (!p) return;
 
             currentQty = p.minQty || 1;
-
             document.getElementById('detail-nav-title').innerText = p.name;
             document.getElementById('detail-title').innerText = p.name;
             document.getElementById('detail-price-tag').innerText = '฿' + p.price.toLocaleString();
@@ -420,12 +653,10 @@
         function adjustQty(amount) {
             const p = products.find(item => item.id === currentProductId);
             if (!p) return;
-
             let min = p.minQty || 1;
             currentQty += amount;
             if (currentQty < min) currentQty = min;
             if (currentQty > p.stock && p.stock > 0) currentQty = p.stock;
-
             updateQtyDisplay();
         }
 
@@ -436,13 +667,22 @@
             document.getElementById('total-price').innerText = '฿' + total.toLocaleString();
         }
 
-        // Custom UI Modals สำหรับการซื้อ
         function openCheckoutModal() {
-            const p = products.find(item => item.id === currentProductId);
-            if (!p) return;
+            if (!currentUser) {
+                openCustomAlert("AUTH REQUIRED", "กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อสินค้า!");
+                openAuthModal('login');
+                return;
+            }
 
+            const p = products.find(item => item.id === currentProductId);
             if (p.stock < currentQty) {
-                openCustomAlert("ERROR", "สินค้าในสต็อกไม่เพียงพอ กรุณาลดจำนวนสินค้าลง");
+                openCustomAlert("ERROR", "สินค้าในสต็อกไม่เพียงพอ!");
+                return;
+            }
+
+            const totalPrice = p.price * currentQty;
+            if (currentUser.balance < totalPrice && !currentUser.isAdmin) {
+                openCustomAlert("BALANCE ERROR", "ยอดเงินคงเหลือของคุณไม่เพียงพอ กรุณาติดต่อแอดมินเพื่อเติมเงิน");
                 return;
             }
 
@@ -458,18 +698,35 @@
         function confirmPurchase() {
             const checkbox = document.getElementById('checkout-checkbox');
             if (!checkbox.checked) {
-                openCustomAlert("WARNING", "กรุณากติกา/เงื่อนไข และติ๊กเครื่องหมายถูกเพื่อยืนยันก่อนทำรายการ");
+                openCustomAlert("WARNING", "กรุณาติ๊กเครื่องหมายถูกเพื่อยอมรับเงื่อนไขก่อนซื้อ");
                 return;
             }
 
             const p = products.find(item => item.id === currentProductId);
+            const totalPrice = p.price * currentQty;
+
             if (p.stock < currentQty) {
                 closeCheckoutModal();
                 openCustomAlert("ERROR", "สินค้าในสต็อกไม่เพียงพอ!");
                 return;
             }
 
-            // ตัดสต็อก
+            if (currentUser.balance < totalPrice && !currentUser.isAdmin) {
+                closeCheckoutModal();
+                openCustomAlert("ERROR", "ยอดเงินคงเหลือไม่พอ!");
+                return;
+            }
+
+            // หักเงินและสต็อก
+            if (!currentUser.isAdmin) {
+                currentUser.balance -= totalPrice;
+                // อัปเดตในอาเรย์ users
+                const u = users.find(x => x.email === currentUser.email);
+                if (u) u.balance = currentUser.balance;
+                localStorage.setItem('krjnp_users', JSON.stringify(users));
+                localStorage.setItem('krjnp_current_user', JSON.stringify(currentUser));
+            }
+
             p.stock -= currentQty;
             closeCheckoutModal();
 
@@ -479,6 +736,7 @@
             document.getElementById('success-script-box').value = p.scriptKey || "loadstring(game:HttpGet('YOUR_SCRIPT_HERE'))()";
             document.getElementById('success-modal').classList.remove('hidden');
 
+            updateWalletDisplay();
             openDetail(p.id);
         }
 
@@ -493,7 +751,6 @@
             openCustomAlert("SUCCESS", "คัดลอก Key / Script ไปยังคลิปบอร์ดเรียบร้อยแล้ว!");
         }
 
-        // Custom UI Alert Box แทน alert ของเบราว์เซอร์
         function openCustomAlert(title, message) {
             document.getElementById('alert-title-text').innerText = title;
             document.getElementById('alert-message-text').innerText = message;
@@ -504,30 +761,31 @@
             document.getElementById('custom-alert-modal').classList.add('hidden');
         }
 
-        // Admin Login & Panel Logic (เปลี่ยนจาก prompt เป็น UI โมดัล)
-        function openAdminLoginModal() {
-            document.getElementById('admin-pass-input').value = "";
-            document.getElementById('admin-login-modal').classList.remove('hidden');
-        }
-
-        function closeAdminLoginModal() {
-            document.getElementById('admin-login-modal').classList.add('hidden');
-        }
-
-        function verifyAdminPassword() {
-            let pass = document.getElementById('admin-pass-input').value;
-            if (pass === "1234") {
-                closeAdminLoginModal();
-                renderAdminProducts();
-                document.getElementById('admin-modal').classList.remove('hidden');
-            } else {
-                openCustomAlert("ACCESS DENIED", "รหัสผ่านแอดมินไม่ถูกต้อง!");
-            }
+        // --- ADMIN HUB LOGIC ---
+        function openAdminModal() {
+            renderAdminProducts();
+            renderAdminUsers();
+            document.getElementById('admin-modal').classList.remove('hidden');
         }
 
         function closeAdminModal() {
             document.getElementById('admin-modal').classList.add('hidden');
             renderProducts();
+        }
+
+        function switchAdminTab(tabName) {
+            if (tabName === 'products') {
+                document.getElementById('admin-tab-products').classList.remove('hidden');
+                document.getElementById('admin-tab-users').classList.add('hidden');
+                document.getElementById('tab-btn-products').className = "bg-cybergreen text-black px-4 py-2 rounded-xl font-bold";
+                document.getElementById('tab-btn-users').className = "bg-cyberdarkgreen/60 border border-cybergreen/50 text-cybergreen px-4 py-2 rounded-xl";
+            } else {
+                document.getElementById('admin-tab-products').classList.add('hidden');
+                document.getElementById('admin-tab-users').classList.remove('hidden');
+                document.getElementById('tab-btn-users').className = "bg-cybergreen text-black px-4 py-2 rounded-xl font-bold";
+                document.getElementById('tab-btn-products').className = "bg-cyberdarkgreen/60 border border-cybergreen/50 text-cybergreen px-4 py-2 rounded-xl";
+                renderAdminUsers();
+            }
         }
 
         function renderAdminProducts() {
@@ -537,62 +795,111 @@
             
             products.forEach((p, index) => {
                 list.innerHTML += `
-                    <div class="bg-black/60 border border-cybergreen/30 p-4 rounded-xl space-y-3 cyber-glow">
+                    <div class="bg-black/70 border border-cybergreen/30 p-4 rounded-2xl space-y-3 cyber-glow">
                         <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
-                            <!-- ชื่อสินค้า -->
                             <div class="w-full md:w-1/3">
                                 <label class="text-[10px] text-gray-400 font-mono-code block mb-1">NAME:</label>
-                                <input type="text" value="${p.name}" onchange="updateAdminField(${index}, 'name', this.value)" class="bg-black border border-cybergreen/40 rounded-lg px-3 py-1.5 text-xs w-full text-white font-mono-code cyber-border" placeholder="ชื่อสินค้า">
+                                <input type="text" value="${p.name}" onchange="updateAdminField(${index}, 'name', this.value)" class="bg-black border border-cybergreen/40 rounded-xl px-3 py-2 text-xs w-full text-white font-mono-code cyber-border">
                             </div>
-                            <!-- ราคา -->
                             <div class="w-full md:w-28">
-                                <label class="text-[10px] text-gray-400 font-mono-code block mb-1">PRICE (THB):</label>
-                                <input type="number" value="${p.price}" onchange="updateAdminField(${index}, 'price', Number(this.value))" class="bg-black border border-cybergreen/40 rounded-lg px-3 py-1.5 text-xs w-full text-cybergreen font-mono-code cyber-border" placeholder="ราคา">
+                                <label class="text-[10px] text-gray-400 font-mono-code block mb-1">PRICE:</label>
+                                <input type="number" value="${p.price}" onchange="updateAdminField(${index}, 'price', Number(this.value))" class="bg-black border border-cybergreen/40 rounded-xl px-3 py-2 text-xs w-full text-cybergreen font-mono-code cyber-border">
                             </div>
-                            <!-- สต็อก -->
                             <div class="w-full md:w-28">
                                 <label class="text-[10px] text-gray-400 font-mono-code block mb-1">STOCK:</label>
-                                <input type="number" value="${p.stock}" onchange="updateAdminField(${index}, 'stock', Number(this.value))" class="bg-black border border-cybergreen/40 rounded-lg px-3 py-1.5 text-xs w-full text-white font-mono-code cyber-border" placeholder="สต็อก">
+                                <input type="number" value="${p.stock}" onchange="updateAdminField(${index}, 'stock', Number(this.value))" class="bg-black border border-cybergreen/40 rounded-xl px-3 py-2 text-xs w-full text-white font-mono-code cyber-border">
                             </div>
-                            <!-- ปุ่มลบ -->
                             <div class="w-full md:w-auto self-end md:self-center">
-                                <button onclick="deleteProduct(${index})" class="bg-red-950/40 text-red-400 border border-red-500/50 hover:bg-red-600 hover:text-white px-3.5 py-1.5 rounded-lg text-xs transition font-mono-code">
+                                <button onclick="deleteProduct(${index})" class="bg-red-950/40 text-red-400 border border-red-500/50 hover:bg-red-600 hover:text-white px-3.5 py-2 rounded-xl text-xs transition font-mono-code">
                                     <i class="fa-solid fa-trash mr-1"></i> DELETE
                                 </button>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-cybergreen/10">
-                            <!-- คำอธิบาย -->
                             <div>
                                 <label class="text-[10px] text-gray-400 font-mono-code block mb-1">DESCRIPTION:</label>
-                                <input type="text" value="${p.desc || ''}" onchange="updateAdminField(${index}, 'desc', this.value)" class="bg-black border border-cybergreen/40 rounded-lg px-3 py-1.5 text-xs w-full text-gray-300 font-mono-code cyber-border" placeholder="คำอธิบายสินค้า">
+                                <input type="text" value="${p.desc || ''}" onchange="updateAdminField(${index}, 'desc', this.value)" class="bg-black border border-cybergreen/40 rounded-xl px-3 py-2 text-xs w-full text-gray-300 font-mono-code cyber-border">
                             </div>
-                            <!-- YouTube -->
                             <div>
                                 <label class="text-[10px] text-gray-400 font-mono-code block mb-1">YOUTUBE EMBED URL:</label>
-                                <input type="text" value="${p.youtube || ''}" onchange="updateAdminField(${index}, 'youtube', this.value)" class="bg-black border border-cybergreen/40 rounded-lg px-3 py-1.5 text-xs w-full text-gray-300 font-mono-code cyber-border" placeholder="https://www.youtube.com/embed/...">
+                                <input type="text" value="${p.youtube || ''}" onchange="updateAdminField(${index}, 'youtube', this.value)" class="bg-black border border-cybergreen/40 rounded-xl px-3 py-2 text-xs w-full text-gray-300 font-mono-code cyber-border">
                             </div>
                         </div>
 
-                        <!-- ช่องใส่ Key / Script ที่แอดมินแก้ไขได้ -->
                         <div class="pt-2 border-t border-cybergreen/10">
-                            <label class="text-[10px] text-cybergreen font-mono-code block mb-1">KEY / SCRIPT CONTENT (ส่งให้ลูกค้าหลังซื้อสำเร็จ):</label>
-                            <input type="text" value="${p.scriptKey || ''}" onchange="updateAdminField(${index}, 'scriptKey', this.value)" class="bg-black border border-cybergreen/60 rounded-lg px-3 py-2 text-xs w-full text-cybergreen font-mono-code cyber-border" placeholder="loadstring(game:HttpGet(...))()">
+                            <label class="text-[10px] text-cybergreen font-mono-code block mb-1">KEY / SCRIPT CONTENT:</label>
+                            <input type="text" value="${p.scriptKey || ''}" onchange="updateAdminField(${index}, 'scriptKey', this.value)" class="bg-black border border-cybergreen/60 rounded-xl px-3 py-2 text-xs w-full text-cybergreen font-mono-code cyber-border">
                         </div>
 
-                        <div class="flex items-center justify-between pt-2 border-t border-cybergreen/10">
-                            <div class="flex items-center space-x-3 w-full">
-                                <img src="${p.image}" class="w-10 h-10 object-cover rounded border border-cybergreen/40 bg-black">
-                                <div class="w-full">
-                                    <label class="text-[10px] text-gray-400 font-mono-code block mb-1">CHANGE IMAGE (UPLOAD FILE):</label>
-                                    <input type="file" accept="image/*" onchange="uploadImageFromFile(event, ${index})" class="text-xs text-gray-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyberdarkgreen file:text-cybergreen hover:file:bg-cybergreen hover:file:text-black cursor-pointer">
-                                </div>
+                        <div class="flex items-center space-x-3 pt-2 border-t border-cybergreen/10">
+                            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-cybergreen/40 bg-black">
+                            <div class="w-full">
+                                <label class="text-[10px] text-gray-400 font-mono-code block mb-1">CHANGE IMAGE:</label>
+                                <input type="file" accept="image/*" onchange="uploadImageFromFile(event, ${index})" class="text-xs text-gray-400 file:mr-3 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyberdarkgreen file:text-cybergreen hover:file:bg-cybergreen hover:file:text-black cursor-pointer">
                             </div>
                         </div>
                     </div>
                 `;
             });
+        }
+
+        // แสดงรายชื่อสมาชิกในระบบ เพื่อให้แอดมินคลิกจิ้มชื่อเพื่อเพิ่มเงินได้
+        function renderAdminUsers() {
+            const list = document.getElementById('admin-user-list');
+            list.innerHTML = '';
+
+            users.forEach((u, idx) => {
+                list.innerHTML += `
+                    <div onclick="openUserBalanceModal('${u.email}')" class="bg-black/70 border border-cybergreen/30 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:border-cybergreen hover:bg-cyberdarkgreen/20 transition cyber-glow">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-cyberdarkgreen border border-cybergreen p-2.5 rounded-xl text-cybergreen font-bold">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-sm font-mono-code">${u.name} ${u.isAdmin ? '<span class="text-xs text-amber-400 bg-amber-950/50 px-2 py-0.5 rounded-full border border-amber-500/40">ADMIN</span>' : ''}</div>
+                                <div class="text-xs text-gray-400 font-mono-code">Email: ${u.email}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 font-mono-code">เครดิตเงินสด:</div>
+                            <div class="text-cybergreen font-bold text-sm font-mono-code">฿${(u.balance || 0).toLocaleString()}</div>
+                            <div class="text-[10px] text-gray-500 mt-1 underline">คลิกเพื่อจัดการเงิน</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openUserBalanceModal(email) {
+            selectedUserForBalance = users.find(u => u.email === email);
+            if (!selectedUserForBalance) return;
+
+            document.getElementById('target-username-label').innerText = `Username: ${selectedUserForBalance.name} (${selectedUserForBalance.email})`;
+            document.getElementById('admin-add-amount').value = 100;
+            document.getElementById('admin-add-balance-modal').classList.remove('hidden');
+        }
+
+        function confirmAdminAddBalance() {
+            const amount = Number(document.getElementById('admin-add-amount').value);
+            if (isNaN(amount)) {
+                openCustomAlert("ERROR", "กรุณากรอกตัวเลขจำนวนเงินให้ถูกต้อง");
+                return;
+            }
+
+            selectedUserForBalance.balance = (selectedUserForBalance.balance || 0) + amount;
+            localStorage.setItem('krjnp_users', JSON.stringify(users));
+
+            // ถ้าเป็นคนเดียวกับที่กำลัง login อยู่ ให้ sync ด้วย
+            if (currentUser && currentUser.email === selectedUserForBalance.email) {
+                currentUser.balance = selectedUserForBalance.balance;
+                localStorage.setItem('krjnp_current_user', JSON.stringify(currentUser));
+                updateWalletDisplay();
+            }
+
+            document.getElementById('admin-add-balance-modal').classList.add('hidden');
+            renderAdminUsers();
+            openCustomAlert("SUCCESS", `อัปเดตยอดเงินให้ผู้ใช้ ${selectedUserForBalance.name} สำเร็จ!`);
         }
 
         function updateAdminField(index, field, value) {
@@ -602,18 +909,17 @@
         function uploadImageFromFile(event, index) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 products[index].image = e.target.result;
                 renderAdminProducts();
-                openCustomAlert("SUCCESS", "อัปโหลดรูปภาพจากเครื่องสำเร็จ!");
+                openCustomAlert("SUCCESS", "อัปโหลดรูปภาพสำเร็จ!");
             };
             reader.readAsDataURL(file);
         }
 
         function addNewProduct() {
-            const newP = {
+            products.push({
                 id: Date.now(),
                 name: "NEW_EXPLOIT_TOOL",
                 price: 199,
@@ -623,13 +929,12 @@
                 image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600",
                 youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
                 scriptKey: "loadstring(game:HttpGet('https://raw.githubusercontent.com/...'))()"
-            };
-            products.push(newP);
+            });
             renderAdminProducts();
         }
 
         function deleteProduct(index) {
-            if (confirm("ต้องการลบสินค้านี้ออกจากฐานข้อมูลใช่หรือไม่?")) {
+            if (confirm("ต้องการลบสินค้านี้ใช่หรือไม่?")) {
                 products.splice(index, 1);
                 renderAdminProducts();
             }
@@ -643,11 +948,11 @@
             document.body.appendChild(dlAnchorElem);
             dlAnchorElem.click();
             dlAnchorElem.remove();
-            openCustomAlert("SUCCESS", "ดาวน์โหลดไฟล์ products.json สำเร็จ! นำไฟล์นี้ไปอัปโหลดทับบน GitHub ได้เลย");
+            openCustomAlert("SUCCESS", "ดาวน์โหลดไฟล์ products.json สำเร็จ!");
         }
 
-        // เริ่มโหลดข้อมูล
-        loadProducts();
+        // โหลดข้อมูลเริ่มต้น
+        loadData();
     </script>
 </body>
 </html>
