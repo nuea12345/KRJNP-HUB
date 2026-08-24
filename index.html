@@ -44,19 +44,40 @@
         .cyber-glow-strong { box-shadow: 0 0 40px rgba(0, 255, 102, 0.6); }
         .cyber-border { border: 1px solid rgba(0, 255, 102, 0.35); }
         .cyber-border:focus { border-color: #00ff66; outline: none; box-shadow: 0 0 15px rgba(0, 255, 102, 0.7); }
+        
+        /* สไตล์อนิเมชันเปลี่ยนหน้าแบบสมูท */
+        .page-transition {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            pointer-events: none;
+        }
+        .page-active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+            pointer-events: auto;
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #030703; }
         ::-webkit-scrollbar-thumb { background: #002b10; border-radius: 4px; border: 1px solid #00ff6666; }
         ::-webkit-scrollbar-thumb:hover { background: #00ff66; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-cybergreen selection:text-black">
+<body class="min-h-screen flex flex-col selection:bg-cybergreen selection:text-black relative">
+
+    <!-- CANVAS สำหรับทำตัวหนังสือโค้ดวิ่งไปวิ่งมาบนพื้นหลัง (Matrix Rain) -->
+    <canvas id="matrix-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-15"></canvas>
 
     <!-- SCANLINE EFFECT -->
-    <div class="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] opacity-20"></div>
+    <div class="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] opacity-20"></div>
 
     <!-- NAVBAR -->
-    <nav class="bg-cyberbg/95 backdrop-blur-xl border-b border-cybergreen/30 sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-2xl">
+    <nav class="bg-cyberbg/90 backdrop-blur-xl border-b border-cybergreen/30 sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-2xl">
         <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchPage('home')">
             <div class="bg-cyberdarkgreen border border-cybergreen p-2.5 rounded-xl text-cybergreen font-bold text-lg cyber-glow group-hover:scale-110 transition duration-300">
                 <i class="fa-solid fa-terminal animate-pulse"></i>
@@ -70,7 +91,7 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <!-- Admin Panel Button (ซ่อนไว้จนกว่าจะ login เป็น KRJNP) -->
+            <!-- Admin Panel Button -->
             <button id="nav-admin-btn" onclick="openAdminModal()" class="hidden bg-cyberdarkgreen/80 border border-cybergreen hover:bg-cybergreen hover:text-black text-cybergreen px-3.5 py-2 rounded-xl text-xs font-semibold font-mono-code flex items-center space-x-1.5 transition cyber-glow">
                 <i class="fa-solid fa-shield-halved"></i><span>ADMIN_HUB</span>
             </button>
@@ -85,11 +106,11 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow">
+    <!-- MAIN CONTENT CONTAINER (มีระบบสลับหน้าแบบสมูท) -->
+    <main class="flex-grow relative z-20 overflow-hidden">
 
         <!-- PAGE: HOME -->
-        <section id="page-home" class="py-24 px-4 text-center max-w-5xl mx-auto">
+        <section id="page-home" class="page-transition page-active py-24 px-4 text-center max-w-5xl mx-auto">
             <div class="inline-block mb-6 px-5 py-2 rounded-full bg-cyberdarkgreen/50 border border-cybergreen/50 text-cybergreen text-xs font-mono-code cyber-glow animate-float">
                 [SECURE PROTOCOL ACTIVE // KRJNP SHOP OFFICIAL]
             </div>
@@ -100,8 +121,8 @@
                 แหล่งรวมสคริปต์และระบบเกมมิ่งคุณภาพสูง เสถียร ปลอดภัย ส่งมอบคีย์อัตโนมัติรวดเร็วทันใจตลอด 24 ชั่วโมง
             </p>
 
-            <!-- ลบรูปดิสคอร์ดออกแล้ว ทำ UI สถิติรีวิวให้มีชีวิตชีวาแทน -->
-            <div class="flex flex-col items-center justify-center space-y-4 mb-12 bg-cybercard/60 border border-cybergreen/30 p-6 rounded-2xl max-w-lg mx-auto cyber-glow">
+            <!-- กล่องรีวิวสถิติ -->
+            <div class="flex flex-col items-center justify-center space-y-4 mb-12 bg-cybercard/80 backdrop-blur-md border border-cybergreen/30 p-6 rounded-2xl max-w-lg mx-auto cyber-glow">
                 <div class="flex text-amber-400 space-x-2 text-xl drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
@@ -119,7 +140,7 @@
         </section>
 
         <!-- PAGE: PRODUCTS -->
-        <section id="page-products" class="hidden py-12 px-4 max-w-6xl mx-auto">
+        <section id="page-products" class="page-transition py-12 px-4 max-w-6xl mx-auto">
             <div class="text-xs text-gray-500 mb-6 flex items-center space-x-2 font-mono-code">
                 <span class="cursor-pointer hover:text-cybergreen" onclick="switchPage('home')">ROOT</span>
                 <span>/</span>
@@ -130,7 +151,7 @@
                     <i class="fa-solid fa-code text-cybergreen animate-bounce"></i>
                     <span>// KRJNP_PRODUCTS</span>
                 </h2>
-                <div id="user-wallet-badge" class="bg-cybercard border border-cybergreen/40 px-4 py-2 rounded-xl text-xs font-mono-code text-cybergreen cyber-glow">
+                <div id="user-wallet-badge" class="bg-cybercard/80 backdrop-blur-md border border-cybergreen/40 px-4 py-2 rounded-xl text-xs font-mono-code text-cybergreen cyber-glow">
                     ยอดเงินคงเหลือ: <span id="wallet-balance" class="font-bold text-white">฿0</span>
                 </div>
             </div>
@@ -141,7 +162,7 @@
         </section>
 
         <!-- PAGE: PRODUCT DETAIL -->
-        <section id="page-detail" class="hidden py-12 px-4 max-w-5xl mx-auto">
+        <section id="page-detail" class="page-transition py-12 px-4 max-w-5xl mx-auto">
             <div class="text-xs text-gray-500 mb-6 flex items-center space-x-2 font-mono-code">
                 <span class="cursor-pointer hover:text-cybergreen" onclick="switchPage('home')">ROOT</span>
                 <span>/</span>
@@ -150,7 +171,7 @@
                 <span id="detail-nav-title" class="text-cybergreen">PRODUCT_DETAIL</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-cybercard border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-cybercard/90 backdrop-blur-md border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
                 <div class="relative overflow-hidden rounded-2xl border border-cybergreen/30 bg-black flex items-center justify-center min-h-[280px]">
                     <img id="detail-img" src="" alt="Product" class="w-full h-full object-cover rounded-xl opacity-95 hover:scale-105 transition duration-500">
                 </div>
@@ -190,7 +211,7 @@
             </div>
 
             <!-- YouTube Video -->
-            <div class="mt-12 bg-cybercard border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
+            <div class="mt-12 bg-cybercard/90 backdrop-blur-md border border-cybergreen/40 p-6 rounded-3xl cyber-glow">
                 <h3 class="text-lg font-bold mb-4 flex items-center space-x-2 font-mono-code text-white">
                     <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
                     <span>// PREVIEW_STREAM</span>
@@ -203,7 +224,7 @@
 
     </main>
 
-    <!-- AUTH MODAL: สมัครสมาชิก / เข้าสู่ระบบ (ใช้อีเมล ชื่อ รหัสผ่าน) -->
+    <!-- AUTH MODAL -->
     <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-cybercard border border-cybergreen w-full max-w-md rounded-3xl p-8 shadow-2xl cyber-glow-strong relative">
             <div class="flex justify-between items-center mb-6 border-b border-cybergreen/30 pb-4">
@@ -234,7 +255,7 @@
                 </div>
             </div>
 
-            <!-- ฟอร์มสมัครสมาชิก (ใช้อีเมล ชื่อ รหัสผ่าน) -->
+            <!-- ฟอร์มสมัครสมาชิก -->
             <div id="form-register" class="space-y-4 hidden">
                 <div>
                     <label class="text-xs text-gray-400 font-mono-code block mb-1">อีเมล:</label>
@@ -296,7 +317,7 @@
         </div>
     </div>
 
-    <!-- SUCCESS MODAL (แสดง Key/Script) -->
+    <!-- SUCCESS MODAL -->
     <div id="success-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-cybercard border border-cybergreen w-full max-w-lg rounded-3xl p-6 shadow-2xl cyber-glow-strong">
             <div class="flex justify-between items-center mb-4 border-b border-cybergreen/30 pb-3">
@@ -337,7 +358,7 @@
         </div>
     </div>
 
-    <!-- ADMIN HUB MODAL (จัดการสินค้า + เพิ่มเงินให้ผู้ใช้โดยการคลิกชื่อ) -->
+    <!-- ADMIN HUB MODAL -->
     <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-cybercard border border-cybergreen w-full max-w-5xl rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto cyber-glow-strong">
             <div class="flex justify-between items-center mb-6 border-b border-cybergreen/30 pb-4">
@@ -371,7 +392,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: จัดการสมาชิกและเติมเงินตามรายชื่อ -->
+            <!-- TAB 2: จัดการสมาชิก -->
             <div id="admin-tab-users" class="hidden space-y-4">
                 <div class="bg-cyberdarkgreen/30 border border-cybergreen/50 p-4 rounded-2xl text-xs text-gray-300 font-mono-code mb-4">
                     <p class="text-cybergreen font-bold mb-1"><i class="fa-solid fa-circle-info mr-1"></i> [ADMIN USER CONTROL]:</p>
@@ -382,7 +403,7 @@
         </div>
     </div>
 
-    <!-- MODAL เติมเงินให้ยูสเซอร์ (เวลาแอดมินกดคลิกที่ชื่อ) -->
+    <!-- MODAL เติมเงินให้ยูสเซอร์ -->
     <div id="admin-add-balance-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-cybercard border border-cybergreen w-full max-w-sm rounded-3xl p-6 shadow-2xl cyber-glow">
             <h3 class="text-sm font-bold text-cybergreen font-mono-code mb-2">จัดการยอดเงินสมาชิก</h3>
@@ -400,15 +421,56 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
+        // --- MATRIX RAIN BACKGROUND EFFECT ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const katakana = 'KRJNP010101010ABCDEF<>//{}[]*#';
+        const alphabet = katakana.split('');
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(3, 7, 3, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff66';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 35);
+
+
+        // --- APP LOGIC ---
         let products = [];
         let users = [];
-        let currentUser = null; // เก็บข้อมูล user ที่ login อยู่
+        let currentUser = null;
         let currentProductId = null;
         let currentQty = 1;
         let selectedUserForBalance = null;
 
         async function loadData() {
-            // โหลดผู้ใช้จาก localStorage
             const savedUsers = localStorage.getItem('krjnp_users');
             if (savedUsers) {
                 users = JSON.parse(savedUsers);
@@ -420,7 +482,6 @@
                 localStorage.setItem('krjnp_users', JSON.stringify(users));
             }
 
-            // โหลด Session การLogin ล่าสุด
             const savedSession = localStorage.getItem('krjnp_current_user');
             if (savedSession) {
                 currentUser = JSON.parse(savedSession);
@@ -463,13 +524,18 @@
             renderProducts();
         }
 
+        // ระบบสลับหน้าพร้อมอนิเมชันสมูท (Smooth Transition)
         function switchPage(pageId) {
-            document.getElementById('page-home').classList.add('hidden');
-            document.getElementById('page-products').classList.add('hidden');
-            document.getElementById('page-detail').classList.add('hidden');
-            
-            document.getElementById('page-' + pageId).classList.remove('hidden');
-            window.scrollTo(0, 0);
+            const pages = ['page-home', 'page-products', 'page-detail'];
+            pages.forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.remove('page-active');
+            });
+
+            setTimeout(() => {
+                document.getElementById('page-' + pageId).classList.add('page-active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
 
             if (pageId === 'products') {
                 renderProducts();
@@ -532,10 +598,8 @@
                 return;
             }
 
-            // เช็คว่าเป็นแอดมินรหัส KRJNP หรือไม่
             let found = users.find(u => (u.email === identifier || u.name === identifier) && u.pass === pass);
             
-            // เช็คกรณีใส่รหัสแอดมิน KRJNP ตรงๆ
             if (!found && pass === 'KRJNP') {
                 found = { email: identifier, name: identifier, pass: 'KRJNP', balance: 99999, isAdmin: true };
                 users.push(found);
@@ -601,7 +665,6 @@
         function updateWalletDisplay() {
             const balanceEl = document.getElementById('wallet-balance');
             if (currentUser) {
-                // ซิงค์เงินกับรายการ users ล่าสุด
                 const uInList = users.find(u => u.email === currentUser.email);
                 if (uInList) currentUser.balance = uInList.balance;
                 balanceEl.innerText = '฿' + currentUser.balance.toLocaleString();
@@ -616,7 +679,7 @@
             grid.innerHTML = '';
             products.forEach(p => {
                 grid.innerHTML += `
-                    <div onclick="openDetail(${p.id})" class="bg-cybercard border border-cybergreen/30 rounded-3xl overflow-hidden cursor-pointer hover:border-cybergreen transition transform hover:-translate-y-1.5 cyber-glow group">
+                    <div onclick="openDetail(${p.id})" class="bg-cybercard/90 backdrop-blur-md border border-cybergreen/30 rounded-3xl overflow-hidden cursor-pointer hover:border-cybergreen transition transform hover:-translate-y-1.5 cyber-glow group">
                         <div class="h-48 overflow-hidden relative bg-black">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-90">
                             <div class="absolute top-3 right-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono-code border border-cybergreen/50 text-cybergreen">
@@ -717,10 +780,8 @@
                 return;
             }
 
-            // หักเงินและสต็อก
             if (!currentUser.isAdmin) {
                 currentUser.balance -= totalPrice;
-                // อัปเดตในอาเรย์ users
                 const u = users.find(x => x.email === currentUser.email);
                 if (u) u.balance = currentUser.balance;
                 localStorage.setItem('krjnp_users', JSON.stringify(users));
@@ -730,7 +791,6 @@
             p.stock -= currentQty;
             closeCheckoutModal();
 
-            // แสดงหน้าต่าง Success พร้อม Key/Script
             document.getElementById('success-product-name').innerText = p.name;
             document.getElementById('success-product-qty').innerText = currentQty;
             document.getElementById('success-script-box').value = p.scriptKey || "loadstring(game:HttpGet('YOUR_SCRIPT_HERE'))()";
@@ -844,7 +904,6 @@
             });
         }
 
-        // แสดงรายชื่อสมาชิกในระบบ เพื่อให้แอดมินคลิกจิ้มชื่อเพื่อเพิ่มเงินได้
         function renderAdminUsers() {
             const list = document.getElementById('admin-user-list');
             list.innerHTML = '';
@@ -890,7 +949,6 @@
             selectedUserForBalance.balance = (selectedUserForBalance.balance || 0) + amount;
             localStorage.setItem('krjnp_users', JSON.stringify(users));
 
-            // ถ้าเป็นคนเดียวกับที่กำลัง login อยู่ ให้ sync ด้วย
             if (currentUser && currentUser.email === selectedUserForBalance.email) {
                 currentUser.balance = selectedUserForBalance.balance;
                 localStorage.setItem('krjnp_current_user', JSON.stringify(currentUser));
@@ -951,7 +1009,6 @@
             openCustomAlert("SUCCESS", "ดาวน์โหลดไฟล์ products.json สำเร็จ!");
         }
 
-        // โหลดข้อมูลเริ่มต้น
         loadData();
     </script>
 </body>
