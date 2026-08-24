@@ -3,58 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRJNP-HUB</title>
+    <title>KRJNP_HUB // CYBER TERMINAL</title>
     <!-- โหลด Supabase Client จาก CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #0b1311;
+            color: #4ade80;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        /* แถบเมนูด้านบน */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111e19;
+            padding: 15px 30px;
+            border-bottom: 2px solid #22c55e;
         }
-        h1 { color: #38bdf8; text-align: center; }
-        .card {
-            background: #334155;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-        button {
-            background: #0284c7;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
+        .navbar .logo {
             font-weight: bold;
+            font-size: 1.2rem;
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
         }
-        button:hover { background: #0369a1; }
+        .navbar .nav-links a {
+            color: #86efac;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.9rem;
+        }
+        .navbar .nav-links a:hover {
+            color: #4ade80;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+        }
+        .navbar .user-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .badge {
+            background: #14532d;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid #22c55e;
+        }
+        .btn-logout {
+            background: #22c55e;
+            color: #0b1311;
+            border: none;
+            padding: 6px 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-logout:hover { background: #4ade80; }
+
+        /* ส่วนแสดงผลหลัก */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        h1.title {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
+        }
+        .subtitle {
+            color: #86efac;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .btn-action {
+            background: transparent;
+            color: #4ade80;
+            border: 2px solid #22c55e;
+            padding: 10px 25px;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+            transition: 0.3s;
+        }
+        .btn-action:hover {
+            background: #22c55e;
+            color: #0b1311;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+        }
+
+        /* กล่องแสดงสถานะฐานข้อมูล */
+        .db-status {
+            margin-top: 30px;
+            background: #111e19;
+            border: 1px dashed #22c55e;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>KRJNP-HUB 🚀</h1>
-        <p style="text-align: center; color: #94a3b8;">ระบบเชื่อมต่อฐานข้อมูล Supabase สำเร็จแล้ว!</p>
-        
-        <div class="card">
-            <h3>สถานะการเชื่อมต่อ:</h3>
-            <p id="status" style="color: #fbbf24;">กำลังตรวจสอบการเชื่อมต่อ...</p>
+    <!-- แถบนำทางด้านบน -->
+    <div class="navbar">
+        <div class="logo">>_ KRJNP_HUB</div>
+        <div class="nav-links">
+            <a href="./home">./home</a>
+            <a href="./products">./products</a>
+            <a href="./inventory">./inventory</a>
         </div>
+        <div class="user-info">
+            <div class="badge">usr: KRJNP HUB</div>
+            <div class="badge" style="background: #166534;">₿999,999</div>
+            <button class="btn-logout">[ LOGOUT ]</button>
+            <button class="btn-logout" style="background: #065f46; color: #fff;">[ ADMIN_PANEL ]</button>
+        </div>
+    </div>
 
-        <div class="card">
-            <h3>รายการสินค้าจาก Cloud Database:</h3>
-            <div id="product-list">กำลังโหลดข้อมูล...</div>
+    <!-- เนื้อหาหลักหน้าเว็บ -->
+    <div class="main-container">
+        <h1 class="title">>>_ KRJNP_HUB // TERMINAL</h1>
+        <p class="subtitle">แพลตฟอร์มดึงข้อมูลสคริปต์และโมดูลอัจฉริยะ เชื่อมต่อระบบฐานข้อมูลคลาวด์ความปลอดภัยสูง ปลอดภัยไร้ขีดจำกัด</p>
+        
+        <button class="btn-action">+ ACCESS_STORE</button> &nbsp;
+        <button class="btn-action" style="border-color: #0ea5e9; color: #38bdf8;">> VIEW_VAULT</button>
+
+        <div style="margin-top: 40px;">
+            <div class="db-status" id="connection-status">
+                กำลังตรวจสอบการเชื่อมต่อ Supabase Cloud...
+            </div>
         </div>
     </div>
 
@@ -67,41 +154,24 @@
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        async function checkConnection() {
-            const statusEl = document.getElementById('status');
-            const productListEl = document.getElementById('product-list');
-
+        async function testSupabaseConnection() {
+            const statusEl = document.getElementById('connection-status');
             try {
-                // ดึงข้อมูลจากตาราง products
+                // ทดสอบดึงข้อมูลจากตาราง products
                 const { data, error } = await _supabase.from('products').select('*');
+                if (error) throw error;
 
-                if (error) {
-                    throw error;
-                }
-
-                statusEl.innerHTML = '✅ เชื่อมต่อกับ Supabase สำเร็จเรียบร้อย!';
-                statusEl.style.color = '#4ade80';
-
-                if (data.length === 0) {
-                    productListEl.innerHTML = '<p>ยังไม่มีสินค้าในระบบ (สามารถเพิ่มข้อมูลใน Supabase Table Editor ได้เลย)</p>';
-                } else {
-                    let html = '<ul>';
-                    data.forEach(product => {
-                        html += `<li><b>${product.name}</b> - ราคา: ${product.price} บาท</li>`;
-                    });
-                    html += '</ul>';
-                    productListEl.innerHTML = html;
-                }
-
+                statusEl.innerHTML = `✅ เชื่อมต่อ Supabase สำเร็จ! (พบข้อมูลสินค้าทั้งหมด ${data.length} รายการในระบบ)`;
+                statusEl.style.borderColor = '#4ade80';
             } catch (err) {
-                statusEl.innerHTML = '❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + err.message;
+                statusEl.innerHTML = `❌ เชื่อมต่อไม่สำเร็จ: ${err.message}`;
+                statusEl.style.borderColor = '#f87171';
                 statusEl.style.color = '#f87171';
-                productListEl.innerHTML = '';
             }
         }
 
-        // รันฟังก์ชันตรวจสอบเมื่อโหลดหน้าเว็บ
-        checkConnection();
+        // รันตรวจสอบเมื่อเปิดหน้าเว็บ
+        testSupabaseConnection();
     </script>
 </body>
 </html>
