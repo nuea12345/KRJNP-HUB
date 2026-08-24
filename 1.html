@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRJNP HUB // CYBER TERMINAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Prompt:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #030503;
+            color: #00ff66;
+            overflow-x: hidden;
+        }
+        .code-font {
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .hacker-bg {
+            background: radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.12) 0%, rgba(3, 5, 3, 1) 80%);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        }
+        .glass-hacker {
+            background: rgba(5, 12, 7, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 102, 0.25);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
+        }
+        .glass-hacker:hover {
+            border-color: rgba(0, 255, 102, 0.6);
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.3);
+        }
+        .neon-btn-hacker {
+            background: linear-gradient(135deg, #00ff66 0%, #008833 100%);
+            color: #030503;
+            font-weight: 900;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+        }
+        .neon-btn-hacker:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.8);
+            background: linear-gradient(135deg, #33ff88 0%, #00aa44 100%);
+        }
+        .fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030503; }
+        ::-webkit-scrollbar-thumb { background: #00ff6655; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00ff66; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between hacker-bg">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-8 py-4 border-b border-[#00ff66]/20 bg-[#030503]/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center space-x-8">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchView('home')">
+                <div class="w-9 h-9 rounded-lg bg-[#00ff66]/10 border border-[#00ff66]/40 flex items-center justify-center text-[#00ff66] font-black code-font shadow-[0_0_10px_rgba(0,255,102,0.3)] group-hover:scale-105 transition">&gt;_</div>
+                <span class="font-black text-xl tracking-wider code-font text-[#00ff66] drop-shadow-[0_0_8px_rgba(0,255,102,0.5)]">KRJNP_HUB</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm code-font text-zinc-300">
+                <button onclick="switchView('home')" class="hover:text-[#00ff66] transition">./home</button>
+                <button onclick="switchView('products')" class="hover:text-[#00ff66] transition">./products</button>
+                <button onclick="switchView('inventory')" class="hover:text-[#00ff66] transition flex items-center space-x-1">
+                    <span>./inventory</span>
+                    <span id="inv-badge" class="bg-[#00ff66] text-black text-[10px] px-1.5 rounded-full hidden font-bold">0</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <div id="user-info-section" class="hidden items-center space-x-3 bg-[#00ff66]/5 border border-[#00ff66]/30 px-4 py-1.5 rounded-lg code-font">
+                <span class="text-xs text-zinc-300">usr: <strong id="username-display" class="text-[#00ff66]"></strong></span>
+                <span class="text-xs bg-[#00ff66]/20 text-[#00ff66] px-2 py-0.5 rounded font-bold" id="user-credit-display">฿0</span>
+            </div>
+            
+            <button id="auth-btn" onclick="openAuthModal('signin')" class="neon-btn-hacker text-xs code-font px-5 py-2.5 rounded-lg uppercase tracking-wider">
+                [ AUTH_LOGIN ]
+            </button>
+            
+            <button id="admin-nav-btn" onclick="switchView('admin')" class="hidden bg-purple-900/40 border border-purple-500/60 hover:bg-purple-900/70 text-purple-300 text-xs code-font px-4 py-2.5 rounded-lg transition shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                [ ADMIN_PANEL ]
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main View Area -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-8">
+
+        <!-- VIEW 1: HOME -->
+        <div id="view-home" class="view-section fade-in flex flex-col items-center justify-center text-center py-20">
+            <div class="inline-block bg-[#00ff66]/10 border border-[#00ff66]/30 text-[#00ff66] text-xs px-4 py-1.5 rounded-md mb-6 code-font tracking-widest shadow-[0_0_10px_rgba(0,255,102,0.2)]">
+                SYSTEM STATUS: SECURE // ENCRYPTION ACTIVE
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 code-font text-[#00ff66] drop-shadow-[0_0_20px_rgba(0,255,102,0.4)]">
+                KRJNP_HUB // TERMINAL
+            </h1>
+            <p class="text-zinc-200 text-sm md:text-base max-w-2xl mb-10 code-font leading-relaxed drop-shadow">
+                แหล่งรวมเครื่องมือและสคริปต์ความปลอดภัยระดับสูง ขับเคลื่อนด้วยระบบอัตโนมัติความเร็วสูง ปลอดภัยไร้ร่องรอย
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="switchView('products')" class="neon-btn-hacker px-8 py-4 rounded-xl code-font text-sm uppercase tracking-wider flex items-center justify-center space-x-2">
+                    <span>> ACCESS_STORE</span>
+                </button>
+                <button onclick="switchView('inventory')" class="glass-hacker hover:bg-[#00ff66]/10 text-[#00ff66] px-8 py-4 rounded-xl code-font text-sm uppercase tracking-wider transition">
+                    > VIEW_VAULT
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: PRODUCTS -->
+        <div id="view-products" class="view-section hidden fade-in">
+            <div class="mb-8">
+                <h2 class="text-2xl font-black code-font text-[#00ff66] tracking-wide">>> AVAILABLE_MODULES</h2>
+                <p class="text-xs code-font text-zinc-400">เลือกชุดเครื่องมือที่ต้องการติดตั้งระบบ</p>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- VIEW 3: PRODUCT DETAIL -->
+        <div id="view-detail" class="view-section hidden fade-in">
+            <button onclick="switchView('products')" class="text-xs code-font text-zinc-400 hover:text-[#00ff66] mb-6 flex items-center space-x-1">
+                <span>&lt;-- BACK_TO_MODULES</span>
+            </button>
+            <div class="glass-hacker rounded-2xl p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="bg-black/60 border border-[#00ff66]/20 rounded-xl p-6 flex items-center justify-center">
+                        <img id="detail-img" src="" alt="Item" class="max-h-80 object-contain rounded-lg filter drop-shadow-[0_0_10px_rgba(0,255,102,0.3)]">
+                    </div>
+                    <div class="flex flex-col justify-between space-y-6">
+                        <div>
+                            <h2 id="detail-title" class="text-3xl font-black code-font text-[#00ff66] mb-4">MODULE_NAME</h2>
+                            <div class="bg-[#00ff66]/5 border border-[#00ff66]/20 rounded-xl p-4 mb-4 inline-block">
+                                <span id="detail-price" class="text-2xl font-bold code-font text-[#00ff66]">฿0</span>
+                            </div>
+                            <p class="text-zinc-300 text-sm code-font leading-relaxed" id="detail-desc">Description...</p>
+                        </div>
+                        <div class="border-t border-[#00ff66]/20 pt-6 space-y-4">
+                            <span class="text-xs code-font text-zinc-300">STOCK_REMAINING: <strong id="detail-stock" class="text-[#00ff66]">0</strong> UNITS</span>
+                            <button onclick="buyProduct()" class="neon-btn-hacker w-full py-4 rounded-xl code-font text-sm uppercase tracking-widest">
+                                EXECUTE_PURCHASE // ซื้อสินค้า
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: INVENTORY / VAULT -->
+        <div id="view-inventory" class="view-section hidden fade-in">
+            <h2 class="text-2xl font-black code-font text-[#00ff66] mb-2">&gt;&gt; USER_VAULT // คลังสินค้าของคุณ</h2>
+            <p class="text-xs code-font text-zinc-400 mb-8">รายการคีย์หรือข้อมูลลับที่คุณเคยครอบครอง</p>
+            <div id="inventory-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- VIEW 5: ADMIN PANEL -->
+        <div id="view-admin" class="view-section hidden fade-in">
+            <div class="mb-8">
+                <h2 class="text-2xl font-black code-font text-purple-400">&gt;&gt; ADMIN_ROOT_PANEL</h2>
+                <p class="text-xs code-font text-zinc-400">จัดการระบบ ร้านค้า สต็อกรายชิ้น และเครดิตผู้ใช้งานแบบเรียลไทม์</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- เพิ่มสินค้า -->
+                    <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
+                        <h3 class="text-base font-bold code-font text-purple-300 mb-4">+ DEPLOY_NEW_MODULE (เพิ่มสินค้าใหม่)</h3>
+                        <form onsubmit="adminAddProduct(event)" class="space-y-4 code-font text-xs">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-zinc-300 mb-1">MODULE_NAME</label>
+                                    <input type="text" id="adm-name" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                                </div>
+                                <div>
+                                    <label class="block text-zinc-300 mb-1">PRICE (THB)</label>
+                                    <input type="number" id="adm-price" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 mb-1">UPLOAD_IMAGE_FILE (แนะนำรูปขนาดเล็ก หรือใช้ลิงก์)</label>
+                                <input type="file" id="adm-imgfile" accept="image/*" class="w-full text-zinc-300 file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-bold file:bg-purple-600 file:text-white hover:file:bg-purple-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 mb-1">DESCRIPTION</label>
+                                <textarea id="adm-desc" rows="2" class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 mb-1">INITIAL_STOCK_KEYS (ใส่คีย์เริ่มต้น คั่นแต่ละบรรทัดสำหรับแต่ละชิ้น)</label>
+                                <textarea id="adm-keys" rows="3" placeholder="KEY-001-XXXX&#10;KEY-002-YYYY" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-purple-300 focus:outline-none focus:border-purple-400"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-lg uppercase tracking-wider">DEPLOY_MODULE</button>
+                        </form>
+                    </div>
+
+                    <!-- รายการสินค้าและการจัดการสต็อกรายชิ้น / ลบสินค้า / แก้ไข -->
+                    <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
+                        <h3 class="text-base font-bold code-font text-purple-300 mb-4">ACTIVE_MODULES & STOCK MANAGEMENT</h3>
+                        <div id="admin-product-list" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- จัดการเครดิตลูกค้าแบบเลือกชื่อ / ค้นหา -->
+                <div class="space-y-6">
+                    <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
+                        <h3 class="text-base font-bold code-font text-purple-300 mb-4">⚡ MODIFY_USER_CREDIT (กิฟต์เครดิต)</h3>
+                        <form onsubmit="adminUpdateCredit(event)" class="space-y-4 code-font text-xs">
+                            <div>
+                                <label class="block text-zinc-300 mb-1">SELECT_OR_SEARCH_USER</label>
+                                <input type="text" id="adm-search-user" list="user-list-options" placeholder="พิมพ์หรือเลือกชื่อผู้ใช้..." required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                                <datalist id="user-list-options">
+                                    <!-- Populate by JS -->
+                                </datalist>
+                            </div>
+                            <div>
+                                <label class="block text-zinc-300 mb-1">AMOUNT (+ADD / -SUB)</label>
+                                <input type="number" id="adm-target-amount" required placeholder="เช่น 100 หรือ -50" class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                            </div>
+                            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-black font-bold py-2.5 rounded-lg uppercase">EXECUTE_CREDIT_CHANGE</button>
+                        </form>
+                    </div>
+
+                    <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
+                        <h3 class="text-base font-bold code-font text-purple-300 mb-2">ROOT_ACCESS_INFO</h3>
+                        <p class="text-xs code-font text-zinc-300 leading-relaxed">
+                            Admin Credentials:<br>
+                            - User: <span class="text-purple-300 font-bold">KRJNP HUB</span><br>
+                            - Pass: <span class="text-purple-300 font-bold">KRJNP1234</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal: Edit Product -->
+    <div id="edit-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-hacker w-full max-w-lg rounded-2xl p-8 fade-in relative border-purple-500/40">
+            <h3 class="text-lg font-black code-font text-purple-300 mb-4">&gt;&gt; EDIT_MODULE_DATA (แก้ไขข้อมูลสินค้า)</h3>
+            <form onsubmit="saveEditedProduct(event)" class="space-y-4 code-font text-xs">
+                <input type="hidden" id="edit-id">
+                <div>
+                    <label class="block text-zinc-300 mb-1">MODULE_NAME</label>
+                    <input type="text" id="edit-name" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">PRICE (THB)</label>
+                    <input type="number" id="edit-price" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">CHANGE_IMAGE (ไม่เลือก = ใช้รูปเดิม)</label>
+                    <input type="file" id="edit-imgfile" accept="image/*" class="w-full text-zinc-300 file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-bold file:bg-purple-600 file:text-white cursor-pointer">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">DESCRIPTION</label>
+                    <textarea id="edit-desc" rows="2" class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400"></textarea>
+                </div>
+                <div class="flex space-x-3 pt-2">
+                    <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-lg uppercase">SAVE_CHANGES</button>
+                    <button type="button" onclick="closeEditModal()" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold py-2.5 rounded-lg uppercase">CANCEL</button>
+                </div>
+            </form>
+            <button onclick="closeEditModal()" class="absolute top-6 right-6 text-zinc-400 hover:text-purple-300 code-font text-sm">[X]</button>
+        </div>
+    </div>
+
+    <!-- Modal: Sign In / Sign Up System -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-hacker w-full max-w-md rounded-2xl p-8 fade-in relative border-[#00ff66]/40">
+            
+            <div class="flex border-b border-[#00ff66]/20 mb-6 code-font text-xs">
+                <button id="tab-signin" onclick="switchAuthTab('signin')" class="flex-1 pb-3 text-[#00ff66] border-b-2 border-[#00ff66] font-bold">SIGN_IN</button>
+                <button id="tab-signup" onclick="switchAuthTab('signup')" class="flex-1 pb-3 text-zinc-400">SIGN_UP</button>
+            </div>
+
+            <!-- Form Sign In -->
+            <form id="form-signin" onsubmit="handleSignIn(event)" class="space-y-4 code-font text-xs">
+                <div>
+                    <label class="block text-zinc-300 mb-1">USERNAME</label>
+                    <input type="text" id="signin-user" required placeholder="พิมพ์ KRJNP HUB สำหรับแอดมิน" class="w-full bg-black/60 border border-[#00ff66]/30 rounded-lg px-4 py-3 text-[#00ff66] focus:outline-none focus:border-[#00ff66]">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">PASSWORD</label>
+                    <input type="password" id="signin-pass" required placeholder="••••••••" class="w-full bg-black/60 border border-[#00ff66]/30 rounded-lg px-4 py-3 text-[#00ff66] focus:outline-none focus:border-[#00ff66]">
+                </div>
+                <button type="submit" class="neon-btn-hacker w-full py-3.5 rounded-lg uppercase tracking-wider text-sm">AUTHENTICATE</button>
+            </form>
+
+            <!-- Form Sign Up -->
+            <form id="form-signup" onsubmit="handleSignUp(event)" class="space-y-4 code-font text-xs hidden">
+                <div>
+                    <label class="block text-zinc-300 mb-1">EMAIL_ADDRESS</label>
+                    <input type="email" id="signup-email" required placeholder="user@cyber.net" class="w-full bg-black/60 border border-[#00ff66]/30 rounded-lg px-3 py-2.5 text-[#00ff66] focus:outline-none focus:border-[#00ff66]">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">USERNAME</label>
+                    <input type="text" id="signup-user" required placeholder="desired_username" class="w-full bg-black/60 border border-[#00ff66]/30 rounded-lg px-3 py-2.5 text-[#00ff66] focus:outline-none focus:border-[#00ff66]">
+                </div>
+                <div>
+                    <label class="block text-zinc-300 mb-1">PASSWORD</label>
+                    <input type="password" id="signup-pass" required placeholder="••••••••" class="w-full bg-black/60 border border-[#00ff66]/30 rounded-lg px-3 py-2.5 text-[#00ff66] focus:outline-none focus:border-[#00ff66]">
+                </div>
+                <button type="submit" class="neon-btn-hacker w-full py-3.5 rounded-lg uppercase tracking-wider text-sm">REGISTER_ACCOUNT (0 THB)</button>
+            </form>
+
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-zinc-400 hover:text-[#00ff66] code-font text-sm">[X]</button>
+        </div>
+    </div>
+
+    <!-- Modal: Success Purchase / Secret Data -->
+    <div id="success-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-hacker w-full max-w-md rounded-2xl p-8 fade-in text-center relative border-[#00ff66]">
+            <div class="w-12 h-12 bg-[#00ff66]/20 border border-[#00ff66] rounded-full flex items-center justify-center mx-auto mb-4 text-[#00ff66] font-bold code-font">✓</div>
+            <h3 class="text-xl font-black code-font text-[#00ff66] mb-2">PURCHASE_SUCCESSFUL</h3>
+            <p class="text-xs code-font text-zinc-300 mb-6">คัดลอกข้อมูลหรือคีย์ลับของคุณด้านล่างนี้</p>
+            
+            <div class="bg-black/80 border border-[#00ff66]/40 rounded-xl p-4 mb-6 flex items-center justify-between">
+                <span id="modal-secret-text" class="text-[#00ff66] code-font text-sm break-all text-left">KEY-XXXX-YYYY</span>
+                <button onclick="copySecret()" class="neon-btn-hacker text-xs code-font px-3 py-2 rounded uppercase ml-2">COPY</button>
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full bg-white/10 hover:bg-white/20 text-[#00ff66] code-font text-xs py-3 rounded-lg uppercase tracking-widest transition">CONFIRM // ตกลง</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-xs code-font text-zinc-500 border-t border-[#00ff66]/10">
+        KRJNP_HUB // SECURE_TERMINAL_2026
+    </footer>
+
+    <!-- JavaScript Logic with Storage Exception Handling -->
+    <script>
+        let currentUser = localStorage.getItem('krjnp_current_user') || null;
+        
+        let usersDB = JSON.parse(localStorage.getItem('krjnp_users_db')) || [
+            { username: "KRJNP HUB", pass: "KRJNP1234", credit: 999999, isAdmin: true }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('krjnp_products_db')) || [
+            {
+                id: 1,
+                name: "Storm Launcher (PC)",
+                price: 99,
+                img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60",
+                desc: "ระบบรันสคริปต์ความปลอดภัยสูง ฟาร์มเต็มระบบ ป้องกันแบน 100%",
+                keys: ["STORM-KEY-001-ALPHA", "STORM-KEY-002-BETA", "STORM-KEY-003-GAMMA"]
+            }
+        ];
+
+        let selectedProduct = null;
+        let lastSecretCopied = "";
+
+        function saveData() {
+            try {
+                localStorage.setItem('krjnp_users_db', JSON.stringify(usersDB));
+                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                if(currentUser) {
+                    localStorage.setItem('krjnp_current_user', currentUser);
+                } else {
+                    localStorage.removeItem('krjnp_current_user');
+                }
+            } catch (err) {
+                console.error("Storage save failed:", err);
+            }
+        }
+
+        function getCurrentUserCredit() {
+            if(!currentUser) return 0;
+            const u = usersDB.find(item => item.username === currentUser);
+            return u ? u.credit : 0;
+        }
+
+        function updateCurrentUserCredit(newCredit) {
+            const u = usersDB.find(item => item.username === currentUser);
+            if(u) {
+                u.credit = newCredit;
+                saveData();
+            }
+        }
+
+        window.onload = function() {
+            if(currentUser) {
+                const u = usersDB.find(item => item.username === currentUser);
+                if(u) {
+                    setupUIAfterLogin(u.username, u.credit, u.isAdmin);
+                } else {
+                    logout();
+                }
+            }
+            loadUserInventoryToBadge();
+        };
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+            window.scrollTo(0, 0);
+
+            if(viewName === 'products') renderProducts();
+            if(viewName === 'inventory') renderInventory();
+            if(viewName === 'admin') {
+                renderAdminProducts();
+                renderUserDatalist();
+            }
+        }
+
+        function openAuthModal(tab) {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            switchAuthTab(tab);
+        }
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const sIn = document.getElementById('form-signin');
+            const sUp = document.getElementById('form-signup');
+            const tIn = document.getElementById('tab-signin');
+            const tUp = document.getElementById('tab-signup');
+
+            if(tab === 'signin') {
+                sIn.classList.remove('hidden');
+                sUp.classList.add('hidden');
+                tIn.className = "flex-1 pb-3 text-[#00ff66] border-b-2 border-[#00ff66] font-bold";
+                tUp.className = "flex-1 pb-3 text-zinc-400";
+            } else {
+                sIn.classList.add('hidden');
+                sUp.classList.remove('hidden');
+                tUp.className = "flex-1 pb-3 text-[#00ff66] border-b-2 border-[#00ff66] font-bold";
+                tIn.className = "flex-1 pb-3 text-zinc-400";
+            }
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const username = document.getElementById('signup-user').value.trim();
+            const pass = document.getElementById('signup-pass').value;
+
+            if(usersDB.some(u => u.username === username)) {
+                alert('ERROR: USERNAME_ALREADY_EXISTS // ชื่อผู้ใช้นี้มีคนใช้แล้ว');
+                return;
+            }
+
+            usersDB.push({ email, username, pass, credit: 0, isAdmin: false, inventory: [] });
+            saveData();
+            alert('REGISTRATION_SUCCESSFUL // สมัครสำเร็จ! เครดิตเริ่มต้น ฿0');
+            switchAuthTab('signin');
+            e.target.reset();
+        }
+
+        function handleSignIn(e) {
+            e.preventDefault();
+            const userIn = document.getElementById('signin-user').value.trim();
+            const passIn = document.getElementById('signin-pass').value;
+
+            if(userIn === "KRJNP HUB" && passIn === "KRJNP1234") {
+                let adminObj = usersDB.find(u => u.username === "KRJNP HUB");
+                if(!adminObj) {
+                    adminObj = { username: "KRJNP HUB", pass: "KRJNP1234", credit: 999999, isAdmin: true, inventory: [] };
+                    usersDB.push(adminObj);
+                }
+                loginSuccess(adminObj.username, adminObj.credit, true);
+                return;
+            }
+
+            const found = usersDB.find(u => (u.username === userIn || u.email === userIn) && u.pass === passIn);
+            if(found) {
+                loginSuccess(found.username, found.credit, found.isAdmin || false);
+            } else {
+                alert('ERROR: INVALID_CREDENTIALS // ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+            }
+        }
+
+        function loginSuccess(username, credit, isAdmin) {
+            currentUser = username;
+            saveData();
+            setupUIAfterLogin(username, credit, isAdmin);
+            closeAuthModal();
+        }
+
+        function setupUIAfterLogin(username, credit, isAdmin) {
+            document.getElementById('username-display').innerText = username;
+            document.getElementById('user-credit-display').innerText = '฿' + credit.toLocaleString();
+
+            document.getElementById('user-info-section').classList.remove('hidden');
+            document.getElementById('user-info-section').classList.add('flex');
+            document.getElementById('auth-btn').innerText = '[ LOGOUT ]';
+            document.getElementById('auth-btn').onclick = logout;
+
+            if(isAdmin) {
+                document.getElementById('admin-nav-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('admin-nav-btn').classList.add('hidden');
+            }
+            loadUserInventoryToBadge();
+        }
+
+        function logout() {
+            currentUser = null;
+            saveData();
+            document.getElementById('user-info-section').classList.add('hidden');
+            document.getElementById('admin-nav-btn').classList.add('hidden');
+            document.getElementById('auth-btn').innerText = '[ AUTH_LOGIN ]';
+            document.getElementById('auth-btn').onclick = () => openAuthModal('signin');
+            switchView('home');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            if(products.length === 0) {
+                grid.innerHTML = `<p class="text-zinc-500 code-font text-sm col-span-3 text-center py-10">NO_MODULES_AVAILABLE</p>`;
+                return;
+            }
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div onclick="selectProduct(${p.id})" class="glass-hacker rounded-xl overflow-hidden cursor-pointer transition group">
+                        <div class="h-48 bg-black/60 overflow-hidden relative flex items-center justify-center border-b border-[#00ff66]/20">
+                            <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold code-font text-[#00ff66] text-lg mb-1">${p.name}</h3>
+                            <p class="text-xs code-font text-zinc-400 mb-4 line-clamp-1">${p.desc}</p>
+                            <div class="flex items-center justify-between code-font">
+                                <span class="text-lg font-black text-[#00ff66]">฿${p.price}</span>
+                                <span class="text-xs text-zinc-400">STOCK: ${p.keys.length}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectProduct(id) {
+            selectedProduct = products.find(p => p.id === id);
+            if(!selectedProduct) return;
+
+            document.getElementById('detail-title').innerText = selectedProduct.name;
+            document.getElementById('detail-price').innerText = '฿' + selectedProduct.price;
+            document.getElementById('detail-desc').innerText = selectedProduct.desc;
+            document.getElementById('detail-stock').innerText = selectedProduct.keys.length;
+            document.getElementById('detail-img').src = selectedProduct.img;
+
+            switchView('detail');
+        }
+
+        function buyProduct() {
+            if(!currentUser) {
+                alert('ERROR: ACCESS_DENIED // กรุณาเข้าสู่ระบบก่อนซื้อ');
+                openAuthModal('signin');
+                return;
+            }
+            if(selectedProduct.keys.length <= 0) {
+                alert('ERROR: OUT_OF_STOCK // สินค้าหมดชั่วคราว');
+                return;
+            }
+            
+            let credit = getCurrentUserCredit();
+            if(credit < selectedProduct.price) {
+                alert('ERROR: INSUFFICIENT_CREDITS // เครดิตของคุณไม่เพียงพอ');
+                return;
+            }
+
+            credit -= selectedProduct.price;
+            updateCurrentUserCredit(credit);
+            document.getElementById('user-credit-display').innerText = '฿' + credit.toLocaleString();
+
+            const obtainedKey = selectedProduct.keys.shift();
+            saveData();
+
+            let userObj = usersDB.find(u => u.username === currentUser);
+            if(userObj) {
+                if(!userObj.inventory) userObj.inventory = [];
+                userObj.inventory.push({
+                    name: selectedProduct.name,
+                    secret: obtainedKey,
+                    date: new Date().toLocaleString()
+                });
+                saveData();
+            }
+
+            loadUserInventoryToBadge();
+            document.getElementById('detail-stock').innerText = selectedProduct.keys.length;
+
+            lastSecretCopied = obtainedKey;
+            document.getElementById('modal-secret-text').innerText = lastSecretCopied;
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            switchView('inventory');
+        }
+
+        function copySecret() {
+            navigator.clipboard.writeText(lastSecretCopied);
+            alert('COPIED_TO_CLIPBOARD');
+        }
+
+        function loadUserInventoryToBadge() {
+            if(!currentUser) return;
+            const userObj = usersDB.find(u => u.username === currentUser);
+            if(userObj && userObj.inventory) {
+                const badge = document.getElementById('inv-badge');
+                if(userObj.inventory.length > 0) {
+                    badge.innerText = userObj.inventory.length;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+        }
+
+        function renderInventory() {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = '';
+            if(!currentUser) {
+                list.innerHTML = `<p class="text-zinc-500 code-font text-sm col-span-2 text-center py-10">PLEASE_LOGIN_FIRST</p>`;
+                return;
+            }
+            const userObj = usersDB.find(u => u.username === currentUser);
+            if(!userObj || !userObj.inventory || userObj.inventory.length === 0) {
+                list.innerHTML = `<p class="text-zinc-500 code-font text-sm col-span-2 text-center py-10">NO_RECORDS_FOUND</p>`;
+                return;
+            }
+            userObj.inventory.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="glass-hacker rounded-xl p-5 flex flex-col justify-between space-y-3 code-font">
+                        <div>
+                            <span class="text-xs text-zinc-500">VAULT_ITEM #${index+1}</span>
+                            <h4 class="text-base font-bold text-[#00ff66]">${item.name}</h4>
+                            <p class="text-[11px] text-zinc-500">ACQUIRED: ${item.date}</p>
+                        </div>
+                        <div class="bg-black/70 border border-[#00ff66]/30 rounded-lg p-3 flex items-center justify-between">
+                            <span class="text-xs text-[#00ff66] break-all">${item.secret}</span>
+                            <button onclick="navigator.clipboard.writeText('${item.secret}'); alert('COPIED!');" class="neon-btn-hacker text-xs px-3 py-1.5 rounded uppercase ml-2">COPY</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function adminAddProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('adm-name').value.trim();
+            const price = Number(document.getElementById('adm-price').value);
+            const desc = document.getElementById('adm-desc').value.trim();
+            const keysInput = document.getElementById('adm-keys').value;
+            const fileInput = document.getElementById('adm-imgfile');
+
+            const keysArray = keysInput.split('\n').map(k => k.trim()).filter(k => k.length > 0);
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    const base64Img = uploadEvent.target.result;
+                    tryToSaveProduct(name, price, desc, keysArray, base64Img);
+                };
+                reader.onerror = function() {
+                    alert('ERROR: READER_FAILED // ไม่สามารถอ่านไฟล์รูปภาพได้');
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                tryToSaveProduct(name, price, desc, keysArray, "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60");
+            }
+        }
+
+        function tryToSaveProduct(name, price, desc, keysArray, imgUrl) {
+            try {
+                let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || [];
+                const newId = currentProducts.length > 0 ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
+                
+                const newProduct = {
+                    id: newId,
+                    name: name,
+                    price: price,
+                    desc: desc,
+                    keys: keysArray,
+                    img: imgUrl
+                };
+
+                currentProducts.push(newProduct);
+                
+                localStorage.setItem('krjnp_products_db', JSON.stringify(currentProducts));
+                products = currentProducts;
+
+                alert('MODULE_DEPLOYED_SUCCESSFULLY');
+                
+                document.getElementById('adm-name').value = '';
+                document.getElementById('adm-price').value = '';
+                document.getElementById('adm-desc').value = '';
+                document.getElementById('adm-keys').value = '';
+                document.getElementById('adm-imgfile').value = '';
+                
+                renderAdminProducts();
+
+            } catch (err) {
+                alert('ERROR: STORAGE_LIMIT_EXCEEDED // หน่วยความจำเครื่องเต็ม (รูปภาพใหญ่เกินไป แนะนำให้ใช้รูปขนาดเล็กหรือลดความละเอียดลงครับเพื่อน)');
+                console.error(err);
+            }
+        }
+
+        function renderAdminProducts() {
+            const list = document.getElementById('admin-product-list');
+            list.innerHTML = '';
+            if(products.length === 0) {
+                list.innerHTML = `<p class="text-zinc-500 code-font text-xs">NO_MODULES_IN_SYSTEM</p>`;
+                return;
+            }
+            products.forEach(p => {
+                let keysHtml = '';
+                p.keys.forEach((k, idx) => {
+                    keysHtml += `
+                        <div class="flex items-center justify-between bg-black/50 px-3 py-1.5 rounded border border-purple-500/20 text-xs mb-1">
+                            <span class="text-purple-300 font-mono truncate max-w-[200px]" title="${k}">#${idx+1}: ${k}</span>
+                            <button onclick="adminDeleteKey(${p.id}, ${idx})" class="text-red-400 hover:text-red-300 text-[10px] uppercase ml-2">[ลบสต็อกนี้]</button>
+                        </div>
+                    `;
+                });
+
+                list.innerHTML += `
+                    <div class="bg-black/60 border border-purple-500/40 rounded-xl p-4 code-font">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <img src="${p.img}" class="w-12 h-12 object-cover rounded">
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">${p.name}</h4>
+                                    <p class="text-emerald-400 text-xs">฿${p.price} | สต็อกคงเหลือ: ${p.keys.length} ชิ้น</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="openEditModal(${p.id})" class="bg-purple-600/30 border border-purple-400 hover:bg-purple-600/60 text-purple-300 text-xs px-3 py-1.5 rounded transition">✏️ แก้ไข</button>
+                                <button onclick="adminDeleteProduct(${p.id})" class="bg-red-600/30 border border-red-500 hover:bg-red-600/60 text-red-300 text-xs px-3 py-1.5 rounded transition">🗑️ ลบสินค้า</button>
+                            </div>
+                        </div>
+                        <div class="space-y-1 mb-3 max-h-36 overflow-y-auto pr-1">
+                            <p class="text-[11px] text-zinc-400 mb-1">รายการสต็อกย่อย:</p>
+                            ${keysHtml || '<p class="text-zinc-600 text-xs">ไม่มีสต็อกเหลือ</p>'}
+                        </div>
+                        <div class="flex space-x-2">
+                            <input type="text" id="add-key-input-${p.id}" placeholder="เพิ่มสต็อกคีย์ใหม่..." class="flex-grow bg-black/80 border border-purple-500/30 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-purple-400">
+                            <button onclick="adminAddKey(${p.id})" class="bg-purple-600 hover:bg-purple-500 text-white text-xs px-4 py-1.5 rounded uppercase font-bold">+ เพิ่มสต็อก</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openEditModal(id) {
+            const p = products.find(item => item.id === id);
+            if(!p) return;
+            document.getElementById('edit-id').value = p.id;
+            document.getElementById('edit-name').value = p.name;
+            document.getElementById('edit-price').value = p.price;
+            document.getElementById('edit-desc').value = p.desc;
+            document.getElementById('edit-imgfile').value = "";
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        }
+
+        function saveEditedProduct(e) {
+            e.preventDefault();
+            const id = Number(document.getElementById('edit-id').value);
+            const name = document.getElementById('edit-name').value.trim();
+            const price = Number(document.getElementById('edit-price').value);
+            const desc = document.getElementById('edit-desc').value.trim();
+            const fileInput = document.getElementById('edit-imgfile');
+
+            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
+            const p = currentProducts.find(item => item.id === id);
+
+            if(p) {
+                p.name = name;
+                p.price = price;
+                p.desc = desc;
+
+                if(fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(uploadEvent) {
+                        p.img = uploadEvent.target.result;
+                        finalizeEdit(currentProducts);
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    finalizeEdit(currentProducts);
+                }
+            }
+        }
+
+        function finalizeEdit(updatedProducts) {
+            try {
+                products = updatedProducts;
+                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                closeEditModal();
+                renderAdminProducts();
+                alert('MODULE_UPDATED_SUCCESSFULLY');
+            } catch (err) {
+                alert('ERROR: STORAGE_LIMIT_EXCEEDED // หน่วยความจำเต็ม ไม่สามารถบันทึกภาพขนาดใหญ่ได้');
+            }
+        }
+
+        function adminAddKey(productId) {
+            const input = document.getElementById(`add-key-input-${productId}`);
+            const val = input.value.trim();
+            if(!val) return;
+            
+            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
+            const p = currentProducts.find(item => item.id === productId);
+            if(p) {
+                p.keys.push(val);
+                try {
+                    products = currentProducts;
+                    localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                    renderAdminProducts();
+                    input.value = '';
+                    alert('ADDED_STOCK_KEY_SUCCESS');
+                } catch (err) {
+                    alert('ERROR: STORAGE_LIMIT_EXCEEDED');
+                }
+            }
+        }
+
+        function adminDeleteKey(productId, keyIndex) {
+            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
+            const p = currentProducts.find(item => item.id === productId);
+            if(p) {
+                p.keys.splice(keyIndex, 1);
+                products = currentProducts;
+                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                renderAdminProducts();
+            }
+        }
+
+        function adminDeleteProduct(productId) {
+            if(confirm('CONFIRM_DELETE_MODULE // คุณต้องการลบสินค้านี้ใช่หรือไม่?')) {
+                let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
+                products = currentProducts.filter(p => p.id !== productId);
+                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                renderAdminProducts();
+            }
+        }
+
+        function renderUserDatalist() {
+            const datalist = document.getElementById('user-list-options');
+            datalist.innerHTML = '';
+            usersDB.forEach(u => {
+                datalist.innerHTML += `<option value="${u.username}">`;
+            });
+        }
+
+        function adminUpdateCredit(e) {
+            e.preventDefault();
+            const targetUser = document.getElementById('adm-search-user').value.trim();
+            const amount = Number(document.getElementById('adm-target-amount').value);
+            
+            const targetObj = usersDB.find(u => u.username === targetUser);
+            if(!targetObj) {
+                alert('ERROR: USER_NOT_FOUND // ไม่พบชื่อผู้ใช้นี้ในระบบ');
+                return;
+            }
+
+            targetObj.credit += amount;
+            saveData();
+
+            if(currentUser === targetUser) {
+                document.getElementById('user-credit-display').innerText = '฿' + targetObj.credit.toLocaleString();
+            }
+
+            alert(`CREDIT_UPDATED for [${targetUser}] (${amount > 0 ? '+' : ''}${amount}) | ยอดปัจจุบัน: ฿${targetObj.credit.toLocaleString()}`);
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
