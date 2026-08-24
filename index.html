@@ -96,13 +96,13 @@
         <!-- VIEW 1: HOME -->
         <div id="view-home" class="view-section fade-in flex flex-col items-center justify-center text-center py-20">
             <div class="inline-block bg-[#00ff66]/10 border border-[#00ff66]/30 text-[#00ff66] text-xs px-4 py-1.5 rounded-md mb-6 code-font tracking-widest shadow-[0_0_10px_rgba(0,255,102,0.2)]">
-                SYSTEM STATUS: SECURE // ENCRYPTION ACTIVE
+                SYSTEM STATUS: SECURE // GLOBAL SYNC ACTIVE
             </div>
             <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 code-font text-[#00ff66] drop-shadow-[0_0_20px_rgba(0,255,102,0.4)]">
                 KRJNP_HUB // TERMINAL
             </h1>
             <p class="text-zinc-200 text-sm md:text-base max-w-2xl mb-10 code-font leading-relaxed drop-shadow">
-                แหล่งรวมเครื่องมือและสคริปต์ความปลอดภัยระดับสูง ขับเคลื่อนด้วยระบบอัตโนมัติความเร็วสูง ปลอดภัยไร้ร่องรอย
+                แหล่งรวมเครื่องมือและสคริปต์ความปลอดภัยระดับสูง ขับเคลื่อนด้วยระบบซิงค์ข้อมูลเรียลไทม์ แอดมินบันทึก ทุกคนเห็นตรงกันทันที
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
                 <button onclick="switchView('products')" class="neon-btn-hacker px-8 py-4 rounded-xl code-font text-sm uppercase tracking-wider flex items-center justify-center space-x-2">
@@ -116,9 +116,14 @@
 
         <!-- VIEW 2: PRODUCTS -->
         <div id="view-products" class="view-section hidden fade-in">
-            <div class="mb-8">
-                <h2 class="text-2xl font-black code-font text-[#00ff66] tracking-wide">>> AVAILABLE_MODULES</h2>
-                <p class="text-xs code-font text-zinc-400">เลือกชุดเครื่องมือที่ต้องการติดตั้งระบบ</p>
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black code-font text-[#00ff66] tracking-wide">&gt;&gt; AVAILABLE_MODULES</h2>
+                    <p class="text-xs code-font text-zinc-400">เลือกชุดเครื่องมือที่ต้องการติดตั้งระบบ (ข้อมูลอัปเดตสดจากแอดมิน)</p>
+                </div>
+                <button onclick="syncGlobalData()" class="bg-[#00ff66]/10 border border-[#00ff66]/30 hover:bg-[#00ff66]/20 text-[#00ff66] text-xs code-font px-3 py-2 rounded-lg transition">
+                    🔄 REFRESH_DATA
+                </button>
             </div>
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Rendered by JS -->
@@ -165,9 +170,14 @@
 
         <!-- VIEW 5: ADMIN PANEL -->
         <div id="view-admin" class="view-section hidden fade-in">
-            <div class="mb-8">
-                <h2 class="text-2xl font-black code-font text-purple-400">&gt;&gt; ADMIN_ROOT_PANEL</h2>
-                <p class="text-xs code-font text-zinc-400">จัดการระบบ ร้านค้า สต็อกรายชิ้น และเครดิตผู้ใช้งานแบบเรียลไทม์</p>
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-black code-font text-purple-400">&gt;&gt; ADMIN_ROOT_PANEL</h2>
+                    <p class="text-xs code-font text-zinc-400">แก้ไขข้อมูล กด Save แล้วผู้ใช้งานทุกคนจะเห็นการเปลี่ยนแปลงทันที</p>
+                </div>
+                <button onclick="forceGlobalSave()" class="bg-purple-600 hover:bg-purple-500 text-white text-xs code-font px-4 py-2.5 rounded-lg font-bold shadow-[0_0_15px_rgba(168,85,247,0.5)] transition">
+                    💾 SAVE & DEPLOY ALL CHANGES
+                </button>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -195,24 +205,24 @@
                                 <textarea id="adm-desc" rows="2" class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400"></textarea>
                             </div>
                             <div>
-                                <label class="block text-zinc-300 mb-1">INITIAL_STOCK_KEYS (ใส่คีย์เริ่มต้น คั่นแต่ละบรรทัดสำหรับแต่ละชิ้น)</label>
+                                <label class="block text-zinc-300 mb-1">INITIAL_STOCK_KEYS (คั่นแต่ละบรรทัดสำหรับแต่ละชิ้น)</label>
                                 <textarea id="adm-keys" rows="3" placeholder="KEY-001-XXXX&#10;KEY-002-YYYY" required class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-purple-300 focus:outline-none focus:border-purple-400"></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-lg uppercase tracking-wider">DEPLOY_MODULE</button>
+                            <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-lg uppercase tracking-wider">DEPLOY_MODULE & SAVE</button>
                         </form>
                     </div>
 
-                    <!-- รายการสินค้าและการจัดการสต็อกรายชิ้น / ลบสินค้า / แก้ไข -->
+                    <!-- รายการสินค้าและการจัดการสต็อก / ลบ / แก้ไข -->
                     <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
                         <h3 class="text-base font-bold code-font text-purple-300 mb-4">ACTIVE_MODULES & STOCK MANAGEMENT</h3>
                         <div id="admin-product-list" class="space-y-6"></div>
                     </div>
                 </div>
 
-                <!-- จัดการเครดิตลูกค้าแบบเลือกชื่อ / ค้นหา -->
+                <!-- จัดการเครดิตลูกค้า -->
                 <div class="space-y-6">
                     <div class="glass-hacker rounded-2xl p-6 border-purple-500/30">
-                        <h3 class="text-base font-bold code-font text-purple-300 mb-4">⚡ MODIFY_USER_CREDIT (กิฟต์เครดิต)</h3>
+                        <h3 class="text-base font-bold code-font text-purple-300 mb-4">⚡ MODIFY_USER_CREDIT (เติมเครดิตเข้าจริง)</h3>
                         <form onsubmit="adminUpdateCredit(event)" class="space-y-4 code-font text-xs">
                             <div>
                                 <label class="block text-zinc-300 mb-1">SELECT_OR_SEARCH_USER</label>
@@ -222,10 +232,10 @@
                                 </datalist>
                             </div>
                             <div>
-                                <label class="block text-zinc-300 mb-1">AMOUNT (+ADD / -SUB)</label>
+                                <label class="block text-zinc-300 mb-1">AMOUNT (+เพิ่ม / -ลด)</label>
                                 <input type="number" id="adm-target-amount" required placeholder="เช่น 100 หรือ -50" class="w-full bg-black/60 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-400">
                             </div>
-                            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-black font-bold py-2.5 rounded-lg uppercase">EXECUTE_CREDIT_CHANGE</button>
+                            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-black font-bold py-2.5 rounded-lg uppercase">EXECUTE & SAVE CREDIT</button>
                         </form>
                     </div>
 
@@ -274,10 +284,9 @@
         </div>
     </div>
 
-    <!-- Modal: Sign In / Sign Up System -->
+    <!-- Modal: Sign In / Sign Up -->
     <div id="auth-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-hacker w-full max-w-md rounded-2xl p-8 fade-in relative border-[#00ff66]/40">
-            
             <div class="flex border-b border-[#00ff66]/20 mb-6 code-font text-xs">
                 <button id="tab-signin" onclick="switchAuthTab('signin')" class="flex-1 pb-3 text-[#00ff66] border-b-2 border-[#00ff66] font-bold">SIGN_IN</button>
                 <button id="tab-signup" onclick="switchAuthTab('signup')" class="flex-1 pb-3 text-zinc-400">SIGN_UP</button>
@@ -317,7 +326,7 @@
         </div>
     </div>
 
-    <!-- Modal: Success Purchase / Secret Data -->
+    <!-- Modal: Success Purchase -->
     <div id="success-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-hacker w-full max-w-md rounded-2xl p-8 fade-in text-center relative border-[#00ff66]">
             <div class="w-12 h-12 bg-[#00ff66]/20 border border-[#00ff66] rounded-full flex items-center justify-center mx-auto mb-4 text-[#00ff66] font-bold code-font">✓</div>
@@ -337,12 +346,12 @@
         KRJNP_HUB // SECURE_TERMINAL_2026
     </footer>
 
-    <!-- JavaScript Logic with Storage Exception Handling -->
+    <!-- JavaScript Logic with Global Sync & Real Admin Credit -->
     <script>
         let currentUser = localStorage.getItem('krjnp_current_user') || null;
         
         let usersDB = JSON.parse(localStorage.getItem('krjnp_users_db')) || [
-            { username: "KRJNP HUB", pass: "KRJNP1234", credit: 999999, isAdmin: true }
+            { username: "KRJNP HUB", pass: "KRJNP1234", credit: 999999, isAdmin: true, inventory: [] }
         ];
 
         let products = JSON.parse(localStorage.getItem('krjnp_products_db')) || [
@@ -358,6 +367,47 @@
 
         let selectedProduct = null;
         let lastSecretCopied = "";
+
+        // ฟังก์ชันซิงค์ข้อมูลกลาง (ทุกคนเห็นตรงกันเมื่อแอดมินกด Save หรือรีเฟรช)
+        function syncGlobalData() {
+            try {
+                const savedUsers = localStorage.getItem('krjnp_users_db');
+                const savedProducts = localStorage.getItem('krjnp_products_db');
+                
+                if(savedUsers) usersDB = JSON.parse(savedUsers);
+                if(savedProducts) products = JSON.parse(savedProducts);
+
+                if(currentUser) {
+                    const u = usersDB.find(item => item.username === currentUser);
+                    if(u) {
+                        document.getElementById('user-credit-display').innerText = '฿' + u.credit.toLocaleString();
+                        setupUIAfterLogin(u.username, u.credit, u.isAdmin);
+                    } else {
+                        logout();
+                    }
+                }
+                loadUserInventoryToBadge();
+                renderProducts();
+            } catch (err) {
+                console.error("Sync failed:", err);
+            }
+        }
+
+        // ฟังเหตุการณ์เมื่อมีการบันทึกข้อมูลจากหน้าอื่นหรือแท็บอื่นในเบราว์เซอร์เดียวกัน
+        window.addEventListener('storage', function(e) {
+            syncGlobalData();
+        });
+
+        function forceGlobalSave() {
+            try {
+                localStorage.setItem('krjnp_users_db', JSON.stringify(usersDB));
+                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                alert('SUCCESS: ALL CHANGES SAVED & DEPLOYED! (ทุกคนที่รีเฟรชหรือเปิดเว็บจะเห็นข้อมูลปัจจุบันทันที)');
+                syncGlobalData();
+            } catch (err) {
+                alert('ERROR: STORAGE_LIMIT_EXCEEDED // หน่วยความจำเต็ม');
+            }
+        }
 
         function saveData() {
             try {
@@ -388,6 +438,7 @@
         }
 
         window.onload = function() {
+            syncGlobalData();
             if(currentUser) {
                 const u = usersDB.find(item => item.username === currentUser);
                 if(u) {
@@ -396,10 +447,10 @@
                     logout();
                 }
             }
-            loadUserInventoryToBadge();
         };
 
         function switchView(viewName) {
+            syncGlobalData();
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('view-' + viewName).classList.remove('hidden');
             window.scrollTo(0, 0);
@@ -541,6 +592,7 @@
         }
 
         function selectProduct(id) {
+            syncGlobalData();
             selectedProduct = products.find(p => p.id === id);
             if(!selectedProduct) return;
 
@@ -554,6 +606,7 @@
         }
 
         function buyProduct() {
+            syncGlobalData();
             if(!currentUser) {
                 alert('ERROR: ACCESS_DENIED // กรุณาเข้าสู่ระบบก่อนซื้อ');
                 openAuthModal('signin');
@@ -621,6 +674,7 @@
         }
 
         function renderInventory() {
+            syncGlobalData();
             const list = document.getElementById('inventory-list');
             list.innerHTML = '';
             if(!currentUser) {
@@ -665,9 +719,6 @@
                     const base64Img = uploadEvent.target.result;
                     tryToSaveProduct(name, price, desc, keysArray, base64Img);
                 };
-                reader.onerror = function() {
-                    alert('ERROR: READER_FAILED // ไม่สามารถอ่านไฟล์รูปภาพได้');
-                };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
                 tryToSaveProduct(name, price, desc, keysArray, "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60");
@@ -675,41 +726,31 @@
         }
 
         function tryToSaveProduct(name, price, desc, keysArray, imgUrl) {
-            try {
-                let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || [];
-                const newId = currentProducts.length > 0 ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
-                
-                const newProduct = {
-                    id: newId,
-                    name: name,
-                    price: price,
-                    desc: desc,
-                    keys: keysArray,
-                    img: imgUrl
-                };
+            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+            
+            const newProduct = {
+                id: newId,
+                name: name,
+                price: price,
+                desc: desc,
+                keys: keysArray,
+                img: imgUrl
+            };
 
-                currentProducts.push(newProduct);
-                
-                localStorage.setItem('krjnp_products_db', JSON.stringify(currentProducts));
-                products = currentProducts;
-
-                alert('MODULE_DEPLOYED_SUCCESSFULLY');
-                
-                document.getElementById('adm-name').value = '';
-                document.getElementById('adm-price').value = '';
-                document.getElementById('adm-desc').value = '';
-                document.getElementById('adm-keys').value = '';
-                document.getElementById('adm-imgfile').value = '';
-                
-                renderAdminProducts();
-
-            } catch (err) {
-                alert('ERROR: STORAGE_LIMIT_EXCEEDED // หน่วยความจำเครื่องเต็ม (รูปภาพใหญ่เกินไป แนะนำให้ใช้รูปขนาดเล็กหรือลดความละเอียดลงครับเพื่อน)');
-                console.error(err);
-            }
+            products.push(newProduct);
+            forceGlobalSave();
+            
+            document.getElementById('adm-name').value = '';
+            document.getElementById('adm-price').value = '';
+            document.getElementById('adm-desc').value = '';
+            document.getElementById('adm-keys').value = '';
+            document.getElementById('adm-imgfile').value = '';
+            
+            renderAdminProducts();
         }
 
         function renderAdminProducts() {
+            syncGlobalData();
             const list = document.getElementById('admin-product-list');
             list.innerHTML = '';
             if(products.length === 0) {
@@ -778,8 +819,7 @@
             const desc = document.getElementById('edit-desc').value.trim();
             const fileInput = document.getElementById('edit-imgfile');
 
-            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
-            const p = currentProducts.find(item => item.id === id);
+            const p = products.find(item => item.id === id);
 
             if(p) {
                 p.name = name;
@@ -790,25 +830,19 @@
                     const reader = new FileReader();
                     reader.onload = function(uploadEvent) {
                         p.img = uploadEvent.target.result;
-                        finalizeEdit(currentProducts);
+                        finalizeEdit();
                     };
                     reader.readAsDataURL(fileInput.files[0]);
                 } else {
-                    finalizeEdit(currentProducts);
+                    finalizeEdit();
                 }
             }
         }
 
-        function finalizeEdit(updatedProducts) {
-            try {
-                products = updatedProducts;
-                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
-                closeEditModal();
-                renderAdminProducts();
-                alert('MODULE_UPDATED_SUCCESSFULLY');
-            } catch (err) {
-                alert('ERROR: STORAGE_LIMIT_EXCEEDED // หน่วยความจำเต็ม ไม่สามารถบันทึกภาพขนาดใหญ่ได้');
-            }
+        function finalizeEdit() {
+            closeEditModal();
+            forceGlobalSave();
+            renderAdminProducts();
         }
 
         function adminAddKey(productId) {
@@ -816,43 +850,34 @@
             const val = input.value.trim();
             if(!val) return;
             
-            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
-            const p = currentProducts.find(item => item.id === productId);
+            const p = products.find(item => item.id === productId);
             if(p) {
                 p.keys.push(val);
-                try {
-                    products = currentProducts;
-                    localStorage.setItem('krjnp_products_db', JSON.stringify(products));
-                    renderAdminProducts();
-                    input.value = '';
-                    alert('ADDED_STOCK_KEY_SUCCESS');
-                } catch (err) {
-                    alert('ERROR: STORAGE_LIMIT_EXCEEDED');
-                }
+                forceGlobalSave();
+                renderAdminProducts();
+                input.value = '';
             }
         }
 
         function adminDeleteKey(productId, keyIndex) {
-            let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
-            const p = currentProducts.find(item => item.id === productId);
+            const p = products.find(item => item.id === productId);
             if(p) {
                 p.keys.splice(keyIndex, 1);
-                products = currentProducts;
-                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                forceGlobalSave();
                 renderAdminProducts();
             }
         }
 
         function adminDeleteProduct(productId) {
             if(confirm('CONFIRM_DELETE_MODULE // คุณต้องการลบสินค้านี้ใช่หรือไม่?')) {
-                let currentProducts = JSON.parse(localStorage.getItem('krjnp_products_db')) || products;
-                products = currentProducts.filter(p => p.id !== productId);
-                localStorage.setItem('krjnp_products_db', JSON.stringify(products));
+                products = products.filter(p => p.id !== productId);
+                forceGlobalSave();
                 renderAdminProducts();
             }
         }
 
         function renderUserDatalist() {
+            syncGlobalData();
             const datalist = document.getElementById('user-list-options');
             datalist.innerHTML = '';
             usersDB.forEach(u => {
@@ -862,6 +887,7 @@
 
         function adminUpdateCredit(e) {
             e.preventDefault();
+            syncGlobalData();
             const targetUser = document.getElementById('adm-search-user').value.trim();
             const amount = Number(document.getElementById('adm-target-amount').value);
             
@@ -872,7 +898,7 @@
             }
 
             targetObj.credit += amount;
-            saveData();
+            forceGlobalSave();
 
             if(currentUser === targetUser) {
                 document.getElementById('user-credit-display').innerText = '฿' + targetObj.credit.toLocaleString();
